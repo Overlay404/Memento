@@ -20,8 +20,6 @@ namespace Memento.View.Controls
     /// </summary>
     public partial class TextBlockCustom : UserControl
     {
-
-
         public string TextInTextBlock
         {
             get { return (string)GetValue(TextInTextBlockProperty); }

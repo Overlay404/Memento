@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Memento.Model;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +20,18 @@ namespace Memento.View.Pages
     /// <summary>
     /// Логика взаимодействия для PersonVisitPage.xaml
     /// </summary>
-    public partial class PersonVisitPage : Page
+    public partial class PersonVisitPage : Page, INotifyPropertyChanged
     {
+        public IEnumerable<Visitor> employees { get; set; }
         public PersonVisitPage()
         {
+            employees = Connection.Db.Visitor.Local;
+
             InitializeComponent();
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(employees)));
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

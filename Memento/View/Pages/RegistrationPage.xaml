@@ -10,8 +10,8 @@
 
     <Grid>
         <StackPanel VerticalAlignment="Center" Width="300">
-            <local:TextBlockCustom TextInTextBlock="Имя" Margin="0 10"/>
-            <local:TextBoxCustom NameTextBox="NameUser"/>
+            <local:TextBlockCustom TextInTextBlock="Email" Margin="0 10"/>
+            <local:TextBoxCustom NameTextBox="MailUser"/>
             
             <local:TextBlockCustom TextInTextBlock="Логин" Margin="0 10"/>
             <local:TextBoxCustom NameTextBox="Login"/>
