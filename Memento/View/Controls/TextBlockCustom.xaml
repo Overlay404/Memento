@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="Memento.View.Controls.TextBlockCustom"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Memento.View.Controls"
+             x:Name="MessageControlName"
+             mc:Ignorable="d"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <Border Background="#ff9619" CornerRadius="10" Padding="30 10">
+            <TextBlock Text="{Binding TextInTextBlock, ElementName=MessageControlName}" FontSize="14"/>
+        </Border>
+    </Grid>
+</UserControl>
