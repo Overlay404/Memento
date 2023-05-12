@@ -8,8 +8,13 @@
              mc:Ignorable="d"
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
-        <Border Background="#ff9619" CornerRadius="10" Padding="30 10">
-            <TextBlock Text="{Binding TextInTextBlock, ElementName=MessageControlName}" FontSize="14"/>
+        <Border Background="#ff9619"
+                CornerRadius="10"
+                Padding="30 5">
+            
+            <TextBlock Text="{Binding TextInTextBlock, ElementName=MessageControlName}"
+                       HorizontalAlignment="Center"
+                       FontSize="14"/>
         </Border>
     </Grid>
 </UserControl>

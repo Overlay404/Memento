@@ -3,12 +3,198 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Memento.View.Pages"
+      xmlns:local="clr-namespace:Memento.View.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="PersonVisitPage">
+      Title="PersonVisitPage"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4.5*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Форма записи на посещение мероприятия"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontSize="24"
+                   Grid.ColumnSpan="3"/>
+
+        <Border Background="#f3f3f3"
+                Grid.Row="1"
+                Margin="10 0 0 0"
+                CornerRadius="0 0 10 10">
+            <StackPanel>
+                <local:TextBlockCustom TextInTextBlock="Информация для пропуска"
+                                   Margin="0 10"
+                                   VerticalAlignment="Top"/>
+
+                <TextBlock Text="Срок действия заявки:"
+                           FontSize="13"
+                           Margin="0 0 0 7"
+                           HorizontalAlignment="Center"/>
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+
+                    <TextBlock Text="С*"
+                               FontSize="13"
+                               Margin="0 3 5 0"/>
+
+                    <DatePicker Name="WithDatePicker"
+                                IsDropDownOpen="True"
+                                SelectedDateFormat="Short"/>
+
+                    <TextBlock Text="по"
+                               FontSize="14"
+                               Margin="10 3 5 0"/>
+
+                    <DatePicker Name="ByDatePicker"
+                                IsDropDownOpen="True"
+                                SelectedDateFormat="Short"/>
+                </StackPanel>
+
+                <TextBlock Text="Цель посещения:"
+                           FontSize="13"
+                           Margin="0 5 0 7"
+                           HorizontalAlignment="Center"/>
+
+                <ComboBox Margin="0 0 0 10"
+                          HorizontalAlignment="Center"
+                          Width="250">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+        </Border>
+
+        <Border Background="#f3f3f3"
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="20 0 10 0"
+                CornerRadius="0 0 10 10">
+            <StackPanel>
+                <local:TextBlockCustom TextInTextBlock="Принимающая сторона"
+                                   Margin="0 10"
+                                   VerticalAlignment="Top"/>
+
+                <TextBlock Text="Подразделение*:"
+                           FontSize="13"
+                           Margin="10 0 0 5"
+                           HorizontalAlignment="Left"/>
+
+                <ComboBox Margin="10 0 10 0"
+                          HorizontalAlignment="Center"
+                          Width="385">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBlock Text="ФИО*:"
+                           FontSize="13"
+                           Margin="10 5 0 5"
+                           HorizontalAlignment="Left"/>
+
+                <local:TextBoxCustom NameTextBox="ApplicationValidityPeriod"
+                                     Margin="10 0 10 0"/>
+            </StackPanel>
+        </Border>
+
+        <Border Background="#f3f3f3"
+                Grid.Row="2"
+                Grid.ColumnSpan="3"
+                Margin="10 0 10 0"
+                CornerRadius="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+
+                <local:TextBlockCustom TextInTextBlock="Информация о посетителе"
+                                       Grid.ColumnSpan="5"
+                                       VerticalAlignment="Top"/>
+
+                <local:TextBoxCustom NameTextBox="Surname"
+                                     Margin="10 0 10 0"
+                                     Grid.Column="1"
+                                     Grid.Row="1"
+                                     VerticalAlignment="Center"/>
+                
+                <local:TextBoxCustom NameTextBox="Name"
+                                     Margin="10 0 10 0"
+                                     Grid.Column="1"
+                                     Grid.Row="2"
+                                     VerticalAlignment="Center"/>
+                
+                <local:TextBoxCustom NameTextBox="Patronymic"
+                                     Margin="10 0 10 0"
+                                     Grid.Column="1"
+                                     Grid.Row="3"
+                                     VerticalAlignment="Center"/>
+                
+                <local:TextBoxCustom NameTextBox="Phone"
+                                     Margin="10 0 10 0"
+                                     Grid.Column="1"
+                                     Grid.Row="4"
+                                     VerticalAlignment="Center"/>
+
+                <local:TextBoxCustom NameTextBox="Mail"
+                                     Margin="10 0 10 0"
+                                     Grid.Column="1"
+                                     Grid.Row="5"
+                                     VerticalAlignment="Center"/>
+
+                <local:TextBoxCustom NameTextBox="Org"
+                                     Margin="10 0 10 0"
+                                     Grid.Column="3"
+                                     Grid.Row="1"
+                                     VerticalAlignment="Center"/>
+
+                <local:TextBoxCustom NameTextBox="Note"
+                                     Margin="10 0 10 0"
+                                     Grid.Column="3"
+                                     Grid.Row="2"
+                                     VerticalAlignment="Center"/>
+
+                <local:TextBoxCustom NameTextBox="Series"
+                                     Margin="10 0 10 0"
+                                     Grid.Column="3"
+                                     Grid.Row="4"
+                                     VerticalAlignment="Center"/>
+
+                <local:TextBoxCustom NameTextBox="Number"
+                                     Margin="10 0 10 0"
+                                     Grid.Column="3"
+                                     Grid.Row="5"
+                                     VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

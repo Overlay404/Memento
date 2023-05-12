@@ -24,5 +24,15 @@ namespace Memento.View.Pages
         {
             InitializeComponent();
         }
+
+        private void GoToPerson(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void GoToGroup(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

@@ -10,13 +10,20 @@
 
     <Grid>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Border Background="#d9d9d9" CornerRadius="10" Padding="10" Margin="10 0">
+            <Border Background="#d9d9d9"
+                    CornerRadius="10"
+                    Padding="10"
+                    Margin="10 0"
+                    MouseDown="GoToPerson">
                 <StackPanel>
                     <Image Source="..\..\Image\Group.png"/>
                     <TextBlock Text="Личное посещение"/>
                 </StackPanel>
             </Border>
-            <Border Background="#d9d9d9" CornerRadius="10" Padding="10">
+            <Border Background="#d9d9d9"
+                    CornerRadius="10"
+                    Padding="10"
+                    MouseDown="GoToGroup">
                 <StackPanel>
                     <Image Source="..\..\Image\Person.png"/>
                     <TextBlock Text="Групповое посещение"/>

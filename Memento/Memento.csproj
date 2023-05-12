@@ -62,6 +62,9 @@
     <Compile Include="View\Controls\TextBlockCustom.xaml.cs">
       <DependentUpon>TextBlockCustom.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\TextBoxCustom.xaml.cs">
+      <DependentUpon>TextBoxCustom.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\AutorizationPage.xaml.cs">
       <DependentUpon>AutorizationPage.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\Controls\TextBlockCustom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TextBoxCustom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
