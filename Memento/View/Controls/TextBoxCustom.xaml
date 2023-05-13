@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
             <Border Background="{TemplateBinding Background}" 
-                x:Name="Bd" BorderBrush="Black"
+                x:Name="Bd" BorderBrush="Gray"
                 BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
                 <ScrollViewer x:Name="PART_ContentHost"/>
             </Border>

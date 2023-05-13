@@ -1,4 +1,5 @@
 ﻿using Memento.Model;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,13 +24,59 @@ namespace Memento.View.Pages
     public partial class PersonVisitPage : Page
     {
         public IEnumerable<Visitor> Employees { get; set; }
+
+
+
+        public string NameFile
+        {
+            get { return (string)GetValue(NameFileProperty); }
+            set { SetValue(NameFileProperty, value); }
+        }
+
+        public static readonly DependencyProperty NameFileProperty =
+            DependencyProperty.Register("NameFile", typeof(string), typeof(PersonVisitPage));
+
+
+
+
+        public ImageSource PhotoPerson
+        {
+            get { return (ImageSource)GetValue(PhotoPersonProperty); }
+            set { SetValue(PhotoPersonProperty, value); }
+        }
+
+        public static readonly DependencyProperty PhotoPersonProperty =
+            DependencyProperty.Register("PhotoPerson", typeof(ImageSource), typeof(PersonVisitPage));
+
+
         public PersonVisitPage()
         {
             Employees = Connection.Db.Visitor.Local;
 
+            PhotoPerson = (ImageSource)new BitmapImage(new Uri(@"..\..\Image\Person.png", UriKind.Relative));
+
             InitializeComponent();
 
-            //CB.MyItemsSource = Employees;
+            AttachFile.MouseDown += (sender, e) =>
+            {
+                AttachFile.Visibility = Visibility.Collapsed;
+                NameFile = OpenFileDialogSave();
+            };
         }
+
+        public static string OpenFileDialogSave()
+        {
+            OpenFileDialog openFile = new OpenFileDialog()
+            {
+                Filter = "All files| *.txt;*.docx;*.doc;*.pdf*.xls"
+            };
+
+            if (openFile.ShowDialog().GetValueOrDefault())
+            {
+                return openFile.FileName;
+            }
+            return null;
+        }
+
     }
 }

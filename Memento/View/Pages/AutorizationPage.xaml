@@ -29,11 +29,18 @@
                 <Button Content="Войти"
                         FontSize="14"
                         Margin="10 0"
-                        x:Name="InBtn"/>
+                        x:Name="InBtn"
+                        BorderBrush="#ff9619"
+                        Padding="20 8"
+                        BorderThickness="3"/>
                 
                 <Button Content="Регистрация"
                         FontSize="14"
-                        x:Name="RegBtn"/>
+                        x:Name="RegBtn"
+                        
+                        Padding="20 8"
+                        BorderBrush="#ff9619"
+                        BorderThickness="3"/>
             </StackPanel>
         </StackPanel>
     </Grid>

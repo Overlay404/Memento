@@ -12,21 +12,26 @@
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Border Background="#d9d9d9"
                     CornerRadius="10"
-                    Padding="10"
+                    Width="150"
                     Margin="10 0"
                     MouseDown="GoToPerson">
-                <StackPanel>
-                    <Image Source="..\..\Image\Group.png"/>
-                    <TextBlock Text="Личное посещение"/>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image Source="..\..\Image\Person.png" Width="70"/>
+                    <TextBlock Text="Личное посещение"
+                               Foreground="Gray"
+                               Margin="0 10 0 0"/>
                 </StackPanel>
             </Border>
             <Border Background="#d9d9d9"
                     CornerRadius="10"
-                    Padding="10"
+                    Width="150"
+                    Height="150"
                     MouseDown="GoToGroup">
-                <StackPanel>
-                    <Image Source="..\..\Image\Person.png"/>
-                    <TextBlock Text="Групповое посещение"/>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image Source="..\..\Image\Group.png" Width="70"/>
+                    <TextBlock Text="Групповое посещение"
+                               Foreground="Gray"
+                               Margin="0 10 0 0"/>
                 </StackPanel>
             </Border>
         </StackPanel>
