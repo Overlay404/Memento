@@ -20,18 +20,16 @@ namespace Memento.View.Pages
     /// <summary>
     /// Логика взаимодействия для PersonVisitPage.xaml
     /// </summary>
-    public partial class PersonVisitPage : Page, INotifyPropertyChanged
+    public partial class PersonVisitPage : Page
     {
-        public IEnumerable<Visitor> employees { get; set; }
+        public IEnumerable<Visitor> Employees { get; set; }
         public PersonVisitPage()
         {
-            employees = Connection.Db.Visitor.Local;
+            Employees = Connection.Db.Visitor.Local;
 
             InitializeComponent();
 
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(employees)));
+            //CB.MyItemsSource = Employees;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

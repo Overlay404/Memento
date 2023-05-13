@@ -69,9 +69,10 @@
 
                 <local:ComboBoxCustom HorizontalAlignment="Center"
                                       VerticalAlignment="Top"
+                                      x:Name="CB"
                                       Width="250"
                                       DisplayMemberName="Name"
-                                      MyItemsSource="{Binding employees}"/>
+                                      MyItemsSource="{Binding Employees}"/>
             </StackPanel>
         </Border>
 

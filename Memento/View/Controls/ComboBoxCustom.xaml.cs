@@ -56,7 +56,7 @@ namespace Memento.View.Controls
         {
             get { return (IEnumerable)GetValue(MyItemsSourceProperty); }
             set { SetValue(MyItemsSourceProperty, value); }
-        }
+        }   
 
         public object MySelectedItem
         {
