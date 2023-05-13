@@ -5,20 +5,23 @@ namespace Memento.Model
     class Connection
     {
         #region Connection DB
-
-        public static prrrEntities Db { get; set; } = new prrrEntities();
+        public static memento_proEntities Db { get; set; } = new memento_proEntities();
 
         /// <summary>
         /// Инициализация конструктора для подключения к бд
         /// </summary>
         public static void ConnectionDb()
         {
-            Db.Pass.Load();
-            Db.Employee.Load();
-            Db.Docimentation.Load();
-            Db.VisitPurpose.Load();
-            Db.Subdivision.Load();
+            Db.User.Load();
             Db.Visitor.Load();
+            Db.VisitPurpose.Load();
+            Db.Request.Load();
+            Db.Employee.Load();
+            Db.Division.Load();
+            Db.RequestStatus.Load();
+            Db.RequestType.Load();
+            Db.RequestRejectionReason.Load();
+            Db.Organization.Load();
         }
         #endregion
     }

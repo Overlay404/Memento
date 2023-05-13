@@ -13,10 +13,10 @@ namespace Memento.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class prrrEntities : DbContext
+    public partial class memento_proEntities : DbContext
     {
-        public prrrEntities()
-            : base("name=prrrEntities")
+        public memento_proEntities()
+            : base("name=memento_proEntities")
         {
         }
     
@@ -25,10 +25,15 @@ namespace Memento.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Docimentation> Docimentation { get; set; }
+        public virtual DbSet<Division> Division { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
-        public virtual DbSet<Pass> Pass { get; set; }
-        public virtual DbSet<Subdivision> Subdivision { get; set; }
+        public virtual DbSet<Organization> Organization { get; set; }
+        public virtual DbSet<Request> Request { get; set; }
+        public virtual DbSet<RequestRejectionReason> RequestRejectionReason { get; set; }
+        public virtual DbSet<RequestStatus> RequestStatus { get; set; }
+        public virtual DbSet<RequestType> RequestType { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Visitor> Visitor { get; set; }
         public virtual DbSet<VisitPurpose> VisitPurpose { get; set; }
     }

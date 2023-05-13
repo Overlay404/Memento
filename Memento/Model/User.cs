@@ -12,18 +12,19 @@ namespace Memento.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Subdivision
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Subdivision()
+        public User()
         {
-            this.Employee = new HashSet<Employee>();
+            this.Request = new HashSet<Request>();
         }
     
         public int Id { get; set; }
-        public string Title { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employee { get; set; }
+        public virtual ICollection<Request> Request { get; set; }
     }
 }

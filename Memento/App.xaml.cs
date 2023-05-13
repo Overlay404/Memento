@@ -1,22 +1,10 @@
 ﻿using Memento.Model;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Memento
 {
-    /// <summary>
-    /// Логика взаимодействия для App.xaml
-    /// </summary>
     public partial class App : Application
     {
-        App()
-        {
-            Connection.ConnectionDb();
-        }
+        App() => Connection.ConnectionDb();
     }
 }

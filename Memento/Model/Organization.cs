@@ -12,18 +12,18 @@ namespace Memento.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class VisitPurpose
+    public partial class Organization
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public VisitPurpose()
+        public Organization()
         {
-            this.Request = new HashSet<Request>();
+            this.Visitor = new HashSet<Visitor>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Request> Request { get; set; }
+        public virtual ICollection<Visitor> Visitor { get; set; }
     }
 }

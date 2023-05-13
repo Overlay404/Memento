@@ -17,18 +17,19 @@ namespace Memento.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
-            this.Pass = new HashSet<Pass>();
-            this.Subdivision = new HashSet<Subdivision>();
+            this.Request = new HashSet<Request>();
+            this.Division = new HashSet<Division>();
         }
     
         public int Id { get; set; }
+        public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Name { get; set; }
-        public string Patronimyc { get; set; }
+        public string Patronymic { get; set; }
+        public int UserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Pass> Pass { get; set; }
+        public virtual ICollection<Request> Request { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Subdivision> Subdivision { get; set; }
+        public virtual ICollection<Division> Division { get; set; }
     }
 }

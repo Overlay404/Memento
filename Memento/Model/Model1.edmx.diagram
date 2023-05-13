@@ -4,18 +4,27 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="454abedb5701453f9659fbd99f810670" Name="Diagram1">
-        <EntityTypeShape EntityType="prrrModel.Docimentation" Width="1.5" PointX="7.5" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="prrrModel.Employee" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="prrrModel.Pass" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="prrrModel.Subdivision" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="prrrModel.Visitor" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="prrrModel.VisitPurpose" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="prrrModel.FK_Docimentation_Visitor" ManuallyRouted="false" />
-        <AssociationConnector Association="prrrModel.FK_Pass_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="prrrModel.FK_Pass_VisitPurpose" ManuallyRouted="false" />
-        <AssociationConnector Association="prrrModel.TheHost" ManuallyRouted="false" />
-        <AssociationConnector Association="prrrModel.VisitorPass" ManuallyRouted="false" />
+      <Diagram DiagramId="bec4aaa8b16d4686b26ccc88cf786b61" Name="Diagram1">
+        <EntityTypeShape EntityType="memento_proModel.Division" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="memento_proModel.Employee" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="memento_proModel.Organization" Width="1.5" PointX="7.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="memento_proModel.Request" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="memento_proModel.RequestRejectionReason" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="memento_proModel.RequestStatus" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="memento_proModel.RequestType" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="memento_proModel.sysdiagrams" PointX="0.75" PointY="0.75" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="memento_proModel.User" Width="1.5" PointX="3" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="memento_proModel.Visitor" Width="1.5" PointX="10" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="memento_proModel.VisitPurpose" Width="1.5" PointX="3" PointY="16.375" IsExpanded="true" />
+        <AssociationConnector Association="memento_proModel.FK_Request_Division" ManuallyRouted="false" />
+        <AssociationConnector Association="memento_proModel.FK_Request_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="memento_proModel.FK_Visitor_Organization" ManuallyRouted="false" />
+        <AssociationConnector Association="memento_proModel.FK_Request_RequestStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="memento_proModel.FK_Request_RequestType" ManuallyRouted="false" />
+        <AssociationConnector Association="memento_proModel.FK_Request_User" ManuallyRouted="false" />
+        <AssociationConnector Association="memento_proModel.FK_Request_VisitPurpose" ManuallyRouted="false" />
+        <AssociationConnector Association="memento_proModel.Employee_Division" ManuallyRouted="false" />
+        <AssociationConnector Association="memento_proModel.Request_Visitor" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

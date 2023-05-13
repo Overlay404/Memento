@@ -4,347 +4,587 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище prrrModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Docimentation">
+      <Schema Namespace="Хранилище memento_proModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Division">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="VisitorId" Type="int" />
-          <Property Name="Photo" Type="image" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Patronimyc" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Pass">
+        <EntityType Name="Employee_Division">
           <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="DesiredStartDate" Type="date" />
-          <Property Name="DesiredEndDate" Type="date" />
-          <Property Name="VisitPurposeId" Type="int" />
-          <Property Name="EmployeeId" Type="int" />
-        </EntityType>
-        <EntityType Name="Subdivision">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="TheHost">
-          <Key>
-            <PropertyRef Name="SubdivisionId" />
             <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="DivisionId" />
           </Key>
-          <Property Name="SubdivisionId" Type="int" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="DivisionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RequestTypeId" Type="int" Nullable="false" />
+          <Property Name="RequestStatusId" Type="int" Nullable="false" />
+          <Property Name="DivisionId" Type="int" Nullable="false" />
+          <Property Name="DesiredStartDate" Type="date" Nullable="false" />
+          <Property Name="DesiredExpirationDate" Type="date" Nullable="false" />
+          <Property Name="VisitPurposeId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Request_Visitor">
+          <Key>
+            <PropertyRef Name="RequestId" />
+            <PropertyRef Name="VisitorId" />
+          </Key>
+          <Property Name="RequestId" Type="int" Nullable="false" />
+          <Property Name="VisitorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RequestRejectionReason">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RequestId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RequestStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RequestType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="64" Nullable="false" />
         </EntityType>
         <EntityType Name="Visitor">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Patronimic" Type="nvarchar" MaxLength="50" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
-          <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="Organization" Type="nvarchar" MaxLength="50" />
-          <Property Name="Note" Type="nvarchar" MaxLength="50" />
-          <Property Name="DateOfBirth" Type="datetime" />
-          <Property Name="PassportSeries" Type="nvarchar" MaxLength="50" />
-          <Property Name="OassportNum" Type="nvarchar" MaxLength="50" />
-          <Property Name="Photo" Type="image" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="VisitorPass">
-          <Key>
-            <PropertyRef Name="VisitorId" />
-            <PropertyRef Name="PassId" />
-          </Key>
-          <Property Name="VisitorId" Type="int" Nullable="false" />
-          <Property Name="PassId" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="char" MaxLength="20" />
+          <Property Name="Email" Type="nvarchar" MaxLength="320" Nullable="false" />
+          <Property Name="BirthDate" Type="date" Nullable="false" />
+          <Property Name="PassportSeries" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="PassportNumber" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrganizationId" Type="int" />
+          <Property Name="Note" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" />
+          <Property Name="PassportScan" Type="varbinary(max)" Nullable="false" />
+          <Property Name="PassportScanFileName" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="VisitPurpose">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Docimentation_Visitor">
-          <End Role="Visitor" Type="Self.Visitor" Multiplicity="0..1" />
-          <End Role="Docimentation" Type="Self.Docimentation" Multiplicity="*" />
+        <Association Name="FK_Employee_Division_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Employee_Division" Type="Self.Employee_Division" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Visitor">
+            <Principal Role="Division">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Docimentation">
-              <PropertyRef Name="VisitorId" />
+            <Dependent Role="Employee_Division">
+              <PropertyRef Name="DivisionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pass_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Pass" Type="Self.Pass" Multiplicity="*" />
+        <Association Name="FK_Employee_Division_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee_Division" Type="Self.Employee_Division" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Pass">
+            <Dependent Role="Employee_Division">
               <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pass_VisitPurpose">
-          <End Role="VisitPurpose" Type="Self.VisitPurpose" Multiplicity="0..1" />
-          <End Role="Pass" Type="Self.Pass" Multiplicity="*" />
+        <Association Name="FK_Request_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="DivisionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_RequestStatus">
+          <End Role="RequestStatus" Type="Self.RequestStatus" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="RequestStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_RequestType">
+          <End Role="RequestType" Type="Self.RequestType" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="RequestTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Visitor_RequestRejectionReason">
+          <End Role="RequestRejectionReason" Type="Self.RequestRejectionReason" Multiplicity="1" />
+          <End Role="Request_Visitor" Type="Self.Request_Visitor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestRejectionReason">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request_Visitor">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Visitor_Visitor">
+          <End Role="Visitor" Type="Self.Visitor" Multiplicity="1" />
+          <End Role="Request_Visitor" Type="Self.Request_Visitor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visitor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request_Visitor">
+              <PropertyRef Name="VisitorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_VisitPurpose">
+          <End Role="VisitPurpose" Type="Self.VisitPurpose" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="VisitPurpose">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Pass">
+            <Dependent Role="Request">
               <PropertyRef Name="VisitPurposeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TheHost_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="TheHost" Type="Self.TheHost" Multiplicity="*" />
+        <Association Name="FK_Visitor_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
+          <End Role="Visitor" Type="Self.Visitor" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Employee">
+            <Principal Role="Organization">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="TheHost">
-              <PropertyRef Name="EmployeeId" />
+            <Dependent Role="Visitor">
+              <PropertyRef Name="OrganizationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TheHost_Subdivision">
-          <End Role="Subdivision" Type="Self.Subdivision" Multiplicity="1" />
-          <End Role="TheHost" Type="Self.TheHost" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Subdivision">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TheHost">
-              <PropertyRef Name="SubdivisionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_VisitorPass_Pass">
-          <End Role="Pass" Type="Self.Pass" Multiplicity="1" />
-          <End Role="VisitorPass" Type="Self.VisitorPass" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pass">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="VisitorPass">
-              <PropertyRef Name="PassId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_VisitorPass_Visitor">
-          <End Role="Visitor" Type="Self.Visitor" Multiplicity="1" />
-          <End Role="VisitorPass" Type="Self.VisitorPass" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Visitor">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="VisitorPass">
-              <PropertyRef Name="VisitorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="Хранилище prrrModelContainer">
-          <EntitySet Name="Docimentation" EntityType="Self.Docimentation" Schema="dbo" store:Type="Tables" />
+        <EntityContainer Name="Хранилище memento_proModelContainer">
+          <EntitySet Name="Division" EntityType="Self.Division" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Pass" EntityType="Self.Pass" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Subdivision" EntityType="Self.Subdivision" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TheHost" EntityType="Self.TheHost" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_Division" EntityType="Self.Employee_Division" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request_Visitor" EntityType="Self.Request_Visitor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestRejectionReason" EntityType="Self.RequestRejectionReason" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestStatus" EntityType="Self.RequestStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestType" EntityType="Self.RequestType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Visitor" EntityType="Self.Visitor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="VisitorPass" EntityType="Self.VisitorPass" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VisitPurpose" EntityType="Self.VisitPurpose" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Docimentation_Visitor" Association="Self.FK_Docimentation_Visitor">
-            <End Role="Visitor" EntitySet="Visitor" />
-            <End Role="Docimentation" EntitySet="Docimentation" />
+          <AssociationSet Name="FK_Employee_Division_Division" Association="Self.FK_Employee_Division_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Employee_Division" EntitySet="Employee_Division" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pass_Employee" Association="Self.FK_Pass_Employee">
+          <AssociationSet Name="FK_Employee_Division_Employee" Association="Self.FK_Employee_Division_Employee">
             <End Role="Employee" EntitySet="Employee" />
-            <End Role="Pass" EntitySet="Pass" />
+            <End Role="Employee_Division" EntitySet="Employee_Division" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pass_VisitPurpose" Association="Self.FK_Pass_VisitPurpose">
+          <AssociationSet Name="FK_Request_Division" Association="Self.FK_Request_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Employee" Association="Self.FK_Request_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_RequestStatus" Association="Self.FK_Request_RequestStatus">
+            <End Role="RequestStatus" EntitySet="RequestStatus" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_RequestType" Association="Self.FK_Request_RequestType">
+            <End Role="RequestType" EntitySet="RequestType" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_User" Association="Self.FK_Request_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Visitor_RequestRejectionReason" Association="Self.FK_Request_Visitor_RequestRejectionReason">
+            <End Role="RequestRejectionReason" EntitySet="RequestRejectionReason" />
+            <End Role="Request_Visitor" EntitySet="Request_Visitor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Visitor_Visitor" Association="Self.FK_Request_Visitor_Visitor">
+            <End Role="Visitor" EntitySet="Visitor" />
+            <End Role="Request_Visitor" EntitySet="Request_Visitor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_VisitPurpose" Association="Self.FK_Request_VisitPurpose">
             <End Role="VisitPurpose" EntitySet="VisitPurpose" />
-            <End Role="Pass" EntitySet="Pass" />
+            <End Role="Request" EntitySet="Request" />
           </AssociationSet>
-          <AssociationSet Name="FK_TheHost_Employee" Association="Self.FK_TheHost_Employee">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="TheHost" EntitySet="TheHost" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TheHost_Subdivision" Association="Self.FK_TheHost_Subdivision">
-            <End Role="Subdivision" EntitySet="Subdivision" />
-            <End Role="TheHost" EntitySet="TheHost" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VisitorPass_Pass" Association="Self.FK_VisitorPass_Pass">
-            <End Role="Pass" EntitySet="Pass" />
-            <End Role="VisitorPass" EntitySet="VisitorPass" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VisitorPass_Visitor" Association="Self.FK_VisitorPass_Visitor">
+          <AssociationSet Name="FK_Visitor_Organization" Association="Self.FK_Visitor_Organization">
+            <End Role="Organization" EntitySet="Organization" />
             <End Role="Visitor" EntitySet="Visitor" />
-            <End Role="VisitorPass" EntitySet="VisitorPass" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="prrrModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Docimentation">
+      <Schema Namespace="memento_proModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Division">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="VisitorId" Type="Int32" />
-          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Visitor" Relationship="Self.FK_Docimentation_Visitor" FromRole="Docimentation" ToRole="Visitor" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Request" Relationship="Self.FK_Request_Division" FromRole="Division" ToRole="Request" />
+          <NavigationProperty Name="Employee" Relationship="Self.Employee_Division" FromRole="Division" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Patronimyc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Pass" Relationship="Self.FK_Pass_Employee" FromRole="Employee" ToRole="Pass" />
-          <NavigationProperty Name="Subdivision" Relationship="Self.TheHost" FromRole="Employee" ToRole="Subdivision" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Request" Relationship="Self.FK_Request_Employee" FromRole="Employee" ToRole="Request" />
+          <NavigationProperty Name="Division" Relationship="Self.Employee_Division" FromRole="Employee" ToRole="Division" />
         </EntityType>
-        <EntityType Name="Pass">
+        <EntityType Name="Organization">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="DesiredStartDate" Type="DateTime" Precision="0" />
-          <Property Name="DesiredEndDate" Type="DateTime" Precision="0" />
-          <Property Name="VisitPurposeId" Type="Int32" />
-          <Property Name="EmployeeId" Type="Int32" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Pass_Employee" FromRole="Pass" ToRole="Employee" />
-          <NavigationProperty Name="VisitPurpose" Relationship="Self.FK_Pass_VisitPurpose" FromRole="Pass" ToRole="VisitPurpose" />
-          <NavigationProperty Name="Visitor" Relationship="Self.VisitorPass" FromRole="Pass" ToRole="Visitor" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Visitor" Relationship="Self.FK_Visitor_Organization" FromRole="Organization" ToRole="Visitor" />
         </EntityType>
-        <EntityType Name="Subdivision">
+        <EntityType Name="Request">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Employee" Relationship="Self.TheHost" FromRole="Subdivision" ToRole="Employee" />
+          <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
+          <Property Name="RequestStatusId" Type="Int32" Nullable="false" />
+          <Property Name="DivisionId" Type="Int32" Nullable="false" />
+          <Property Name="DesiredStartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DesiredExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="VisitPurposeId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Division" Relationship="Self.FK_Request_Division" FromRole="Request" ToRole="Division" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Request_Employee" FromRole="Request" ToRole="Employee" />
+          <NavigationProperty Name="RequestStatus" Relationship="Self.FK_Request_RequestStatus" FromRole="Request" ToRole="RequestStatus" />
+          <NavigationProperty Name="RequestType" Relationship="Self.FK_Request_RequestType" FromRole="Request" ToRole="RequestType" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Request_User" FromRole="Request" ToRole="User" />
+          <NavigationProperty Name="VisitPurpose" Relationship="Self.FK_Request_VisitPurpose" FromRole="Request" ToRole="VisitPurpose" />
+        </EntityType>
+        <EntityType Name="RequestRejectionReason">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RequestId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Visitor" Relationship="Self.Request_Visitor" FromRole="RequestRejectionReason" ToRole="Visitor" />
+        </EntityType>
+        <EntityType Name="RequestStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Request" Relationship="Self.FK_Request_RequestStatus" FromRole="RequestStatus" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="RequestType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Request" Relationship="Self.FK_Request_RequestType" FromRole="RequestType" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Request" Relationship="Self.FK_Request_User" FromRole="User" ToRole="Request" />
         </EntityType>
         <EntityType Name="Visitor">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Patronimic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Organization" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Note" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
-          <Property Name="PassportSeries" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OassportNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PassportSeries" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PassportNumber" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrganizationId" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Docimentation" Relationship="Self.FK_Docimentation_Visitor" FromRole="Visitor" ToRole="Docimentation" />
-          <NavigationProperty Name="Pass" Relationship="Self.VisitorPass" FromRole="Visitor" ToRole="Pass" />
+          <Property Name="PassportScan" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="PassportScanFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Visitor_Organization" FromRole="Visitor" ToRole="Organization" />
+          <NavigationProperty Name="RequestRejectionReason" Relationship="Self.Request_Visitor" FromRole="Visitor" ToRole="RequestRejectionReason" />
         </EntityType>
         <EntityType Name="VisitPurpose">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Pass" Relationship="Self.FK_Pass_VisitPurpose" FromRole="VisitPurpose" ToRole="Pass" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Request" Relationship="Self.FK_Request_VisitPurpose" FromRole="VisitPurpose" ToRole="Request" />
         </EntityType>
-        <Association Name="FK_Docimentation_Visitor">
-          <End Role="Visitor" Type="Self.Visitor" Multiplicity="0..1" />
-          <End Role="Docimentation" Type="Self.Docimentation" Multiplicity="*" />
+        <Association Name="FK_Request_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Visitor">
+            <Principal Role="Division">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Docimentation">
-              <PropertyRef Name="VisitorId" />
+            <Dependent Role="Request">
+              <PropertyRef Name="DivisionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pass_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Pass" Type="Self.Pass" Multiplicity="*" />
+        <Association Name="FK_Request_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Pass">
+            <Dependent Role="Request">
               <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pass_VisitPurpose">
-          <End Role="VisitPurpose" Type="Self.VisitPurpose" Multiplicity="0..1" />
-          <End Role="Pass" Type="Self.Pass" Multiplicity="*" />
+        <Association Name="FK_Visitor_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
+          <End Role="Visitor" Type="Self.Visitor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visitor">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_RequestStatus">
+          <End Role="RequestStatus" Type="Self.RequestStatus" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="RequestStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_RequestType">
+          <End Role="RequestType" Type="Self.RequestType" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="RequestTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_VisitPurpose">
+          <End Role="VisitPurpose" Type="Self.VisitPurpose" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="VisitPurpose">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Pass">
+            <Dependent Role="Request">
               <PropertyRef Name="VisitPurposeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="TheHost">
+        <Association Name="Employee_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="*" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <End Role="Subdivision" Type="Self.Subdivision" Multiplicity="*" />
         </Association>
-        <Association Name="VisitorPass">
-          <End Role="Pass" Type="Self.Pass" Multiplicity="*" />
+        <Association Name="Request_Visitor">
+          <End Role="RequestRejectionReason" Type="Self.RequestRejectionReason" Multiplicity="*" />
           <End Role="Visitor" Type="Self.Visitor" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="prrrEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Docimentation" EntityType="Self.Docimentation" />
+        <EntityContainer Name="memento_proEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Division" EntityType="Self.Division" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
-          <EntitySet Name="Pass" EntityType="Self.Pass" />
-          <EntitySet Name="Subdivision" EntityType="Self.Subdivision" />
+          <EntitySet Name="Organization" EntityType="Self.Organization" />
+          <EntitySet Name="Request" EntityType="Self.Request" />
+          <EntitySet Name="RequestRejectionReason" EntityType="Self.RequestRejectionReason" />
+          <EntitySet Name="RequestStatus" EntityType="Self.RequestStatus" />
+          <EntitySet Name="RequestType" EntityType="Self.RequestType" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="User" EntityType="Self.User" />
           <EntitySet Name="Visitor" EntityType="Self.Visitor" />
           <EntitySet Name="VisitPurpose" EntityType="Self.VisitPurpose" />
-          <AssociationSet Name="FK_Docimentation_Visitor" Association="Self.FK_Docimentation_Visitor">
+          <AssociationSet Name="FK_Request_Division" Association="Self.FK_Request_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Employee" Association="Self.FK_Request_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitor_Organization" Association="Self.FK_Visitor_Organization">
+            <End Role="Organization" EntitySet="Organization" />
             <End Role="Visitor" EntitySet="Visitor" />
-            <End Role="Docimentation" EntitySet="Docimentation" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pass_Employee" Association="Self.FK_Pass_Employee">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="Pass" EntitySet="Pass" />
+          <AssociationSet Name="FK_Request_RequestStatus" Association="Self.FK_Request_RequestStatus">
+            <End Role="RequestStatus" EntitySet="RequestStatus" />
+            <End Role="Request" EntitySet="Request" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pass_VisitPurpose" Association="Self.FK_Pass_VisitPurpose">
+          <AssociationSet Name="FK_Request_RequestType" Association="Self.FK_Request_RequestType">
+            <End Role="RequestType" EntitySet="RequestType" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_User" Association="Self.FK_Request_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_VisitPurpose" Association="Self.FK_Request_VisitPurpose">
             <End Role="VisitPurpose" EntitySet="VisitPurpose" />
-            <End Role="Pass" EntitySet="Pass" />
+            <End Role="Request" EntitySet="Request" />
           </AssociationSet>
-          <AssociationSet Name="TheHost" Association="Self.TheHost">
+          <AssociationSet Name="Employee_Division" Association="Self.Employee_Division">
+            <End Role="Division" EntitySet="Division" />
             <End Role="Employee" EntitySet="Employee" />
-            <End Role="Subdivision" EntitySet="Subdivision" />
           </AssociationSet>
-          <AssociationSet Name="VisitorPass" Association="Self.VisitorPass">
-            <End Role="Pass" EntitySet="Pass" />
+          <AssociationSet Name="Request_Visitor" Association="Self.Request_Visitor">
+            <End Role="RequestRejectionReason" EntitySet="RequestRejectionReason" />
             <End Role="Visitor" EntitySet="Visitor" />
           </AssociationSet>
         </EntityContainer>
@@ -353,83 +593,135 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище prrrModelContainer" CdmEntityContainer="prrrEntities">
-          <EntitySetMapping Name="Docimentation">
-            <EntityTypeMapping TypeName="prrrModel.Docimentation">
-              <MappingFragment StoreEntitySet="Docimentation">
+        <EntityContainerMapping StorageEntityContainer="Хранилище memento_proModelContainer" CdmEntityContainer="memento_proEntities">
+          <EntitySetMapping Name="Division">
+            <EntityTypeMapping TypeName="memento_proModel.Division">
+              <MappingFragment StoreEntitySet="Division">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="VisitorId" ColumnName="VisitorId" />
-                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employee">
-            <EntityTypeMapping TypeName="prrrModel.Employee">
+            <EntityTypeMapping TypeName="memento_proModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Patronimyc" ColumnName="Patronimyc" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Pass">
-            <EntityTypeMapping TypeName="prrrModel.Pass">
-              <MappingFragment StoreEntitySet="Pass">
+          <EntitySetMapping Name="Organization">
+            <EntityTypeMapping TypeName="memento_proModel.Organization">
+              <MappingFragment StoreEntitySet="Organization">
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request">
+            <EntityTypeMapping TypeName="memento_proModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
+                <ScalarProperty Name="RequestStatusId" ColumnName="RequestStatusId" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
                 <ScalarProperty Name="DesiredStartDate" ColumnName="DesiredStartDate" />
-                <ScalarProperty Name="DesiredEndDate" ColumnName="DesiredEndDate" />
+                <ScalarProperty Name="DesiredExpirationDate" ColumnName="DesiredExpirationDate" />
                 <ScalarProperty Name="VisitPurposeId" ColumnName="VisitPurposeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Subdivision">
-            <EntityTypeMapping TypeName="prrrModel.Subdivision">
-              <MappingFragment StoreEntitySet="Subdivision">
+          <EntitySetMapping Name="RequestRejectionReason">
+            <EntityTypeMapping TypeName="memento_proModel.RequestRejectionReason">
+              <MappingFragment StoreEntitySet="RequestRejectionReason">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Visitor">
-            <EntityTypeMapping TypeName="prrrModel.Visitor">
-              <MappingFragment StoreEntitySet="Visitor">
+          <EntitySetMapping Name="RequestStatus">
+            <EntityTypeMapping TypeName="memento_proModel.RequestStatus">
+              <MappingFragment StoreEntitySet="RequestStatus">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Patronimic" ColumnName="Patronimic" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Organization" ColumnName="Organization" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="PassportSeries" ColumnName="PassportSeries" />
-                <ScalarProperty Name="OassportNum" ColumnName="OassportNum" />
-                <ScalarProperty Name="Photo" ColumnName="Photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestType">
+            <EntityTypeMapping TypeName="memento_proModel.RequestType">
+              <MappingFragment StoreEntitySet="RequestType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="memento_proModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="memento_proModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="VisitPurpose">
-            <EntityTypeMapping TypeName="prrrModel.VisitPurpose">
-              <MappingFragment StoreEntitySet="VisitPurpose">
+          <EntitySetMapping Name="Visitor">
+            <EntityTypeMapping TypeName="memento_proModel.Visitor">
+              <MappingFragment StoreEntitySet="Visitor">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="PassportSeries" ColumnName="PassportSeries" />
+                <ScalarProperty Name="PassportNumber" ColumnName="PassportNumber" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="PassportScan" ColumnName="PassportScan" />
+                <ScalarProperty Name="PassportScanFileName" ColumnName="PassportScanFileName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="TheHost" TypeName="prrrModel.TheHost" StoreEntitySet="TheHost">
+          <EntitySetMapping Name="VisitPurpose">
+            <EntityTypeMapping TypeName="memento_proModel.VisitPurpose">
+              <MappingFragment StoreEntitySet="VisitPurpose">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Employee_Division" TypeName="memento_proModel.Employee_Division" StoreEntitySet="Employee_Division">
+            <EndProperty Name="Division">
+              <ScalarProperty Name="Id" ColumnName="DivisionId" />
+            </EndProperty>
             <EndProperty Name="Employee">
               <ScalarProperty Name="Id" ColumnName="EmployeeId" />
             </EndProperty>
-            <EndProperty Name="Subdivision">
-              <ScalarProperty Name="Id" ColumnName="SubdivisionId" />
-            </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="VisitorPass" TypeName="prrrModel.VisitorPass" StoreEntitySet="VisitorPass">
-            <EndProperty Name="Pass">
-              <ScalarProperty Name="Id" ColumnName="PassId" />
+          <AssociationSetMapping Name="Request_Visitor" TypeName="memento_proModel.Request_Visitor" StoreEntitySet="Request_Visitor">
+            <EndProperty Name="RequestRejectionReason">
+              <ScalarProperty Name="Id" ColumnName="RequestId" />
             </EndProperty>
             <EndProperty Name="Visitor">
               <ScalarProperty Name="Id" ColumnName="VisitorId" />

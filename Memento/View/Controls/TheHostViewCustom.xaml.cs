@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Memento.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,15 @@ namespace Memento.View.Controls
     /// </summary>
     public partial class TheHostViewCustom : UserControl
     {
+        public IEnumerable<Division> Divisions
+        {
+            get { return (IEnumerable<Division>)GetValue(DivisionsProperty); }
+            set { SetValue(DivisionsProperty, value); }
+        }
+
+        public static readonly DependencyProperty DivisionsProperty =
+            DependencyProperty.Register("Divisions", typeof(IEnumerable<Division>), typeof(TheHostViewCustom));
+
         public TheHostViewCustom()
         {
             InitializeComponent();

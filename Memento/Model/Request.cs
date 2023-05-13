@@ -12,23 +12,23 @@ namespace Memento.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Pass
+    public partial class Request
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Pass()
-        {
-            this.Visitor = new HashSet<Visitor>();
-        }
-    
         public int Id { get; set; }
-        public Nullable<System.DateTime> DesiredStartDate { get; set; }
-        public Nullable<System.DateTime> DesiredEndDate { get; set; }
-        public Nullable<int> VisitPurposeId { get; set; }
-        public Nullable<int> EmployeeId { get; set; }
+        public int RequestTypeId { get; set; }
+        public int RequestStatusId { get; set; }
+        public int DivisionId { get; set; }
+        public System.DateTime DesiredStartDate { get; set; }
+        public System.DateTime DesiredExpirationDate { get; set; }
+        public int VisitPurposeId { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public int EmployeeId { get; set; }
     
+        public virtual Division Division { get; set; }
         public virtual Employee Employee { get; set; }
+        public virtual RequestStatus RequestStatus { get; set; }
+        public virtual RequestType RequestType { get; set; }
+        public virtual User User { get; set; }
         public virtual VisitPurpose VisitPurpose { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Visitor> Visitor { get; set; }
     }
 }
