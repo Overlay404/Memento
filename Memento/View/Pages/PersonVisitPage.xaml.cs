@@ -24,8 +24,6 @@ namespace Memento.View.Pages
     /// </summary>
     public partial class PersonVisitPage : Page
     {
-        public IEnumerable<Visitor> Employees { get; set; }
-
         public string NameFile
         {
             get { return (string)GetValue(NameFileProperty); }
@@ -47,8 +45,6 @@ namespace Memento.View.Pages
 
         public PersonVisitPage()
         {
-            Employees = Connection.Db.Visitor.Local;
-
             PhotoPerson = (ImageSource)new BitmapImage(new Uri(@"..\..\Image\Person.png", UriKind.Relative));
 
             InitializeComponent();
@@ -73,6 +69,5 @@ namespace Memento.View.Pages
             }
             return null;
         }
-
     }
 }

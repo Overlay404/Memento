@@ -3,12 +3,206 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Memento.View.Pages"
+      xmlns:local="clr-namespace:Memento.View.Controls"
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GroupVisitPage">
 
-    <Grid>
-        
+    <Grid x:Name="GridX">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3.5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4.5*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Форма записи на посещение мероприятия"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontSize="24"
+                   Grid.ColumnSpan="3"/>
+
+        <local:PassInformationViewCustom x:Name="PassInformation"
+                                         Grid.Row="1"
+                                         Margin="10 0 20 0"/>
+
+        <local:TheHostViewCustom Grid.Row="1"
+                                 Grid.Column="1"
+                                 Grid.ColumnSpan="2"
+                                 Margin="0 0 10 0"/>
+
+        <Border Background="#f3f3f3"
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="10 10 10 0"
+                CornerRadius="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="143*"/>
+                </Grid.RowDefinitions>
+
+                <local:TextBlockCustom TextInTextBlock="Информация о посетителе"
+                                       VerticalAlignment="Top" Grid.ColumnSpan="3"/>
+
+                <Grid Grid.Row="1" Margin="0 0 5 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0"
+                                Margin="5 0 0 0">
+                        <TextBlock Text="Фамилия*:" Margin="0 0 0 7" Height="20.5"/>
+                        <TextBlock Text="Имя*:" Margin="0 0 0 7"  Height="20.5"/>
+                        <TextBlock Text="Отчество*:" Margin="0 0 0 7"  Height="20.5"/>
+                        <TextBlock Text="Телефон:" Margin="0 0 0 7"  Height="20.5"/>
+                        <TextBlock Text="E-mail:" Margin="0 0 0 7"  Height="20.5"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <local:TextBoxCustom NameTextBox="Surname"
+                                             Margin="0 0 0 7"/>
+                        <local:TextBoxCustom NameTextBox="Name"
+                                             Margin="0 0 0 7"/>
+                        <local:TextBoxCustom NameTextBox="Patronymic"
+                                             Margin="0 0 0 7"/>
+                        <local:TextBoxCustom NameTextBox="Phone"
+                                             Margin="0 0 0 7"/>
+                        <local:TextBoxCustom NameTextBox="Mail"
+                                             Margin="0 0 0 7"/>
+                    </StackPanel>
+                </Grid>
+
+
+                <Grid Grid.Row="1"
+                      Grid.Column="1"
+                      Margin="5 0 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="1"
+                                Margin="0 0 10 0">
+                        <local:TextBoxCustom NameTextBox="Org"
+                                             Margin="0 0 0 7"/>
+                        <local:TextBoxCustom NameTextBox="Note"
+                                             Margin="0 0 0 7"/>
+
+                        <DatePicker Margin="0 0 0 7"/>
+
+                        <local:TextBoxCustom NameTextBox="Series"
+                                             Margin="0 0 0 7"/>
+                        <local:TextBoxCustom NameTextBox="Number"
+                                             Margin="0 0 0 7"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Организация:" 
+                                   Margin="0 0 0 7"
+                                   Height="20.5"/>
+
+                        <TextBlock Text="Примечание:" 
+                                   Margin="0 0 0 7"
+                                   Height="20.5"/>
+
+                        <TextBlock Text="Дата рождения:" 
+                                   Margin="0 0 0 7" 
+                                   Height="25"/>
+
+                        <TextBlock Text="Серия:"
+                                   Margin="0 0 0 7"
+                                   Height="20.5"/>
+
+                        <TextBlock Text="Номер:"
+                                   Margin="0 0 0 7"  
+                                   Height="20.5"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Background="#f3f3f3"
+                Grid.Row="2"
+                Grid.Column="2"
+                Margin="10 10 10 0"
+                CornerRadius="10">
+                <local:TextBlockCustom TextInTextBlock="Список посетителей"
+                                       VerticalAlignment="Top"
+                                       Grid.ColumnSpan="3"/>
+
+
+        </Border>
+
+        <Border Background="#f3f3f3"
+                Grid.Row="3"
+                Grid.Column="0"
+                Margin="10 10 5 0"
+                CornerRadius="10">
+
+            <StackPanel>
+                <local:TextBlockCustom TextInTextBlock="Прикрепляемые документы"
+                                        VerticalAlignment="Top"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal"
+                                x:Name="AttachFile"
+                                Margin="5 0 10 0">
+
+                        <fa:ImageAwesome Icon="Paperclip" Width="10"
+                                         Foreground="Gray"
+                                         Margin="0 0 10 0"/>
+
+                        <TextBlock Text="ПРИКРЕПИТЬ ФАЙЛ"
+                                   FontWeight="Bold"
+                                   FontSize="8"
+                                   Foreground="Gray" 
+                                   Margin="0 8"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <fa:ImageAwesome Icon="File" Width="10"
+                                         Foreground="Gray"
+                                         Margin="0 0 10 0"/>
+
+                        <TextBlock Text="{Binding NameFile}"
+                                   FontWeight="Bold"
+                                   FontSize="8"
+                                   Foreground="Gray"
+                                   Margin="0 8"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Orientation="Horizontal" 
+                    Grid.Column="1"
+                    Margin="30 10"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="3"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom">
+
+            <Button Content="Очитить форму"
+                    Padding="20 5"
+                    BorderBrush="Transparent"
+                    Foreground="Gray"/>
+
+            <Button Content="Оформить заявку"
+                    Padding="20 5"
+                    BorderBrush="#ff9619"/>
+        </StackPanel>
     </Grid>
 </Page>
