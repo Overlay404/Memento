@@ -1,4 +1,5 @@
 ﻿using Memento.Model;
+using Memento.View.Controls;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -25,8 +26,6 @@ namespace Memento.View.Pages
     {
         public IEnumerable<Visitor> Employees { get; set; }
 
-
-
         public string NameFile
         {
             get { return (string)GetValue(NameFileProperty); }
@@ -35,9 +34,6 @@ namespace Memento.View.Pages
 
         public static readonly DependencyProperty NameFileProperty =
             DependencyProperty.Register("NameFile", typeof(string), typeof(PersonVisitPage));
-
-
-
 
         public ImageSource PhotoPerson
         {

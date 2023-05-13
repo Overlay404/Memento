@@ -99,14 +99,17 @@
     <Compile Include="Model\Subdivision.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\ComboBoxCustom.xaml.cs">
-      <DependentUpon>ComboBoxCustom.xaml</DependentUpon>
+    <Compile Include="View\Controls\PassInformationViewCustom.xaml.cs">
+      <DependentUpon>PassInformationViewCustom.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\TextBlockCustom.xaml.cs">
       <DependentUpon>TextBlockCustom.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\TextBoxCustom.xaml.cs">
       <DependentUpon>TextBoxCustom.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TheHostViewCustom.xaml.cs">
+      <DependentUpon>TheHostViewCustom.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\AutorizationPage.xaml.cs">
       <DependentUpon>AutorizationPage.xaml</DependentUpon>
@@ -169,7 +172,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Page Include="View\Controls\ComboBoxCustom.xaml">
+    <Page Include="View\Controls\PassInformationViewCustom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -178,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\TextBoxCustom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TheHostViewCustom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
