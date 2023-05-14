@@ -32,6 +32,7 @@ namespace Memento.View.Controls
 
         public TheHostViewCustom()
         {
+            Divisions = Connection.db.Division.ToList();    
             InitializeComponent();
         }
     }

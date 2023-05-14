@@ -37,7 +37,6 @@
                 <Button Content="Регистрация"
                         FontSize="14"
                         x:Name="RegBtn"
-                        
                         Padding="20 8"
                         BorderBrush="#ff9619"
                         BorderThickness="3"/>

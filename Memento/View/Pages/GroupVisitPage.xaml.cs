@@ -53,5 +53,10 @@ namespace Memento.View.Pages
 
             return null;
         }
+
+        private void TheHostViewCustom_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

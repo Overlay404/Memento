@@ -152,6 +152,7 @@
                                 BorderBrush="#FFBFBDBD" 
                                 BorderThickness="2" 
                                 Height="30"
+                                x:Name="LoadImageBtn"
                                 Background="White"/>
                         
                     </StackPanel>

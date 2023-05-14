@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,6 +55,35 @@ namespace Memento.View.Pages
                 AttachFile.Visibility = Visibility.Collapsed;
                 NameFile = OpenFileDialogSave();
             };
+            LoadImageBtn.Click += (sender, e) => { PhotoPerson = ConvertToImageSource(OpenImageDialogSave()); };
+        }
+
+        public static byte[] OpenImageDialogSave()
+        {
+            OpenFileDialog openFile = new OpenFileDialog()
+            {
+                Filter = "Image files|*.jpg;*.jpeg;*.png"
+            };
+
+            if (openFile.ShowDialog().GetValueOrDefault())
+            {
+                BitmapFrame.Create(new MemoryStream(File.ReadAllBytes(openFile.FileName)), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                return File.ReadAllBytes(openFile.FileName);
+            }
+            return null;
+        }
+
+        public static ImageSource ConvertToImageSource(byte[] bytes)
+        {
+            if (bytes == null) return null;
+
+            BitmapImage biImg = new BitmapImage();
+            MemoryStream ms = new MemoryStream(bytes);
+            biImg.BeginInit();
+            biImg.StreamSource = ms;
+            biImg.EndInit();
+            ImageSource image = biImg as ImageSource;
+            return image;
         }
 
         public static string OpenFileDialogSave()

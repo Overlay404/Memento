@@ -52,6 +52,7 @@ namespace Memento.View.Controls
 
         public PassInformationViewCustom()
         {
+            VisitPurposes = Connection.db.VisitPurpose.ToList();
             InitializeComponent();
         }
     }

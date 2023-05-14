@@ -36,7 +36,7 @@
         <local:TheHostViewCustom Grid.Row="1"
                                  Grid.Column="1"
                                  Grid.ColumnSpan="2"
-                                 Margin="0 0 10 0"/>
+                                 Margin="0 0 10 0" Loaded="TheHostViewCustom_Loaded"/>
 
         <Border Background="#f3f3f3"
                 Grid.Row="2"
