@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Memento.Model;
+using Memento.View.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,18 @@ namespace Memento.View.Pages
         public AutorizationPage()
         {
             InitializeComponent();
+
+            InBtn.Click += (sender, e) =>
+            {
+                if(Connection.db.Visitor.FirstOrDefault(v => v.Login == Login.TextInTextBox.Trim() && v.Password == Password.TextInTextBox.Trim()) != null)
+                {
+                    MainWindow.Instance.MainFrame.Navigate(new SelectionPage());
+                }
+                else
+                {
+                    MessageBox.Show("Такого пользователя не существует");
+                }
+            };
         }
     }
 }

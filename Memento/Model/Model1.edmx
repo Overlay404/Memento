@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище memento_proModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище memento_proModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Division">
           <Key>
             <PropertyRef Name="Id" />
@@ -81,16 +81,6 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -151,15 +141,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Request_Division">
-          <End Role="Division" Type="Self.Division" Multiplicity="1" />
-          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+        <Association Name="FK_Employee_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Division">
+            <Principal Role="User">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Request">
-              <PropertyRef Name="DivisionId" />
+            <Dependent Role="Employee">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -199,23 +189,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Request_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Request" Type="Self.Request" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Request">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Request_Visitor_RequestRejectionReason">
-          <End Role="RequestRejectionReason" Type="Self.RequestRejectionReason" Multiplicity="1" />
+        <Association Name="FK_Request_Visitor_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="1" />
           <End Role="Request_Visitor" Type="Self.Request_Visitor" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="RequestRejectionReason">
+            <Principal Role="Request">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Request_Visitor">
@@ -269,7 +247,6 @@
           <EntitySet Name="RequestRejectionReason" EntityType="Self.RequestRejectionReason" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequestStatus" EntityType="Self.RequestStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequestType" EntityType="Self.RequestType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Visitor" EntityType="Self.Visitor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VisitPurpose" EntityType="Self.VisitPurpose" Schema="dbo" store:Type="Tables" />
@@ -281,9 +258,9 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Employee_Division" EntitySet="Employee_Division" />
           </AssociationSet>
-          <AssociationSet Name="FK_Request_Division" Association="Self.FK_Request_Division">
-            <End Role="Division" EntitySet="Division" />
-            <End Role="Request" EntitySet="Request" />
+          <AssociationSet Name="FK_Employee_User" Association="Self.FK_Employee_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
           <AssociationSet Name="FK_Request_Employee" Association="Self.FK_Request_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -297,12 +274,8 @@
             <End Role="RequestType" EntitySet="RequestType" />
             <End Role="Request" EntitySet="Request" />
           </AssociationSet>
-          <AssociationSet Name="FK_Request_User" Association="Self.FK_Request_User">
-            <End Role="User" EntitySet="User" />
+          <AssociationSet Name="FK_Request_Visitor_Request" Association="Self.FK_Request_Visitor_Request">
             <End Role="Request" EntitySet="Request" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Request_Visitor_RequestRejectionReason" Association="Self.FK_Request_Visitor_RequestRejectionReason">
-            <End Role="RequestRejectionReason" EntitySet="RequestRejectionReason" />
             <End Role="Request_Visitor" EntitySet="Request_Visitor" />
           </AssociationSet>
           <AssociationSet Name="FK_Request_Visitor_Visitor" Association="Self.FK_Request_Visitor_Visitor">
@@ -318,39 +291,82 @@
             <End Role="Visitor" EntitySet="Visitor" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="memento_proModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="memento_proEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Division" EntityType="memento_proModel.Division" />
+          <EntitySet Name="Employee" EntityType="memento_proModel.Employee" />
+          <EntitySet Name="Organization" EntityType="memento_proModel.Organization" />
+          <EntitySet Name="Request" EntityType="memento_proModel.Request" />
+          <EntitySet Name="RequestRejectionReason" EntityType="memento_proModel.RequestRejectionReason" />
+          <EntitySet Name="RequestStatus" EntityType="memento_proModel.RequestStatus" />
+          <EntitySet Name="RequestType" EntityType="memento_proModel.RequestType" />
+          <EntitySet Name="User" EntityType="memento_proModel.User" />
+          <EntitySet Name="Visitor" EntityType="memento_proModel.Visitor" />
+          <EntitySet Name="VisitPurpose" EntityType="memento_proModel.VisitPurpose" />
+          <AssociationSet Name="FK_Employee_User" Association="memento_proModel.FK_Employee_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Employee" Association="memento_proModel.FK_Request_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitor_Organization" Association="memento_proModel.FK_Visitor_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="Visitor" EntitySet="Visitor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_RequestStatus" Association="memento_proModel.FK_Request_RequestStatus">
+            <End Role="RequestStatus" EntitySet="RequestStatus" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_RequestType" Association="memento_proModel.FK_Request_RequestType">
+            <End Role="RequestType" EntitySet="RequestType" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_VisitPurpose" Association="memento_proModel.FK_Request_VisitPurpose">
+            <End Role="VisitPurpose" EntitySet="VisitPurpose" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Division" Association="memento_proModel.Employee_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="Request_Visitor" Association="memento_proModel.Request_Visitor">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="Visitor" EntitySet="Visitor" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Division">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Request" Relationship="Self.FK_Request_Division" FromRole="Division" ToRole="Request" />
-          <NavigationProperty Name="Employee" Relationship="Self.Employee_Division" FromRole="Division" ToRole="Employee" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="memento_proModel.Employee_Division" FromRole="Division" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Request" Relationship="Self.FK_Request_Employee" FromRole="Employee" ToRole="Request" />
-          <NavigationProperty Name="Division" Relationship="Self.Employee_Division" FromRole="Employee" ToRole="Division" />
+          <NavigationProperty Name="User" Relationship="memento_proModel.FK_Employee_User" FromRole="Employee" ToRole="User" />
+          <NavigationProperty Name="Request" Relationship="memento_proModel.FK_Request_Employee" FromRole="Employee" ToRole="Request" />
+          <NavigationProperty Name="Division" Relationship="memento_proModel.Employee_Division" FromRole="Employee" ToRole="Division" />
         </EntityType>
         <EntityType Name="Organization">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Visitor" Relationship="Self.FK_Visitor_Organization" FromRole="Organization" ToRole="Visitor" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Visitor" Relationship="memento_proModel.FK_Visitor_Organization" FromRole="Organization" ToRole="Visitor" />
         </EntityType>
         <EntityType Name="Request">
           <Key>
@@ -365,12 +381,11 @@
           <Property Name="VisitPurposeId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Division" Relationship="Self.FK_Request_Division" FromRole="Request" ToRole="Division" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Request_Employee" FromRole="Request" ToRole="Employee" />
-          <NavigationProperty Name="RequestStatus" Relationship="Self.FK_Request_RequestStatus" FromRole="Request" ToRole="RequestStatus" />
-          <NavigationProperty Name="RequestType" Relationship="Self.FK_Request_RequestType" FromRole="Request" ToRole="RequestType" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Request_User" FromRole="Request" ToRole="User" />
-          <NavigationProperty Name="VisitPurpose" Relationship="Self.FK_Request_VisitPurpose" FromRole="Request" ToRole="VisitPurpose" />
+          <NavigationProperty Name="Employee" Relationship="memento_proModel.FK_Request_Employee" FromRole="Request" ToRole="Employee" />
+          <NavigationProperty Name="RequestStatus" Relationship="memento_proModel.FK_Request_RequestStatus" FromRole="Request" ToRole="RequestStatus" />
+          <NavigationProperty Name="RequestType" Relationship="memento_proModel.FK_Request_RequestType" FromRole="Request" ToRole="RequestType" />
+          <NavigationProperty Name="VisitPurpose" Relationship="memento_proModel.FK_Request_VisitPurpose" FromRole="Request" ToRole="VisitPurpose" />
+          <NavigationProperty Name="Visitor" Relationship="memento_proModel.Request_Visitor" FromRole="Request" ToRole="Visitor" />
         </EntityType>
         <EntityType Name="RequestRejectionReason">
           <Key>
@@ -378,90 +393,79 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="RequestId" Type="Int32" Nullable="false" />
-          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Visitor" Relationship="Self.Request_Visitor" FromRole="RequestRejectionReason" ToRole="Visitor" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="RequestStatus">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Request" Relationship="Self.FK_Request_RequestStatus" FromRole="RequestStatus" ToRole="Request" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Request" Relationship="memento_proModel.FK_Request_RequestStatus" FromRole="RequestStatus" ToRole="Request" />
         </EntityType>
         <EntityType Name="RequestType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Request" Relationship="Self.FK_Request_RequestType" FromRole="RequestType" ToRole="Request" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Request" Relationship="memento_proModel.FK_Request_RequestType" FromRole="RequestType" ToRole="Request" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Request" Relationship="Self.FK_Request_User" FromRole="User" ToRole="Request" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="memento_proModel.FK_Employee_User" FromRole="User" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Visitor">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="320" FixedLength="false" Unicode="true" />
           <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="PassportSeries" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="PassportNumber" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PassportSeries" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="PassportNumber" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="OrganizationId" Type="Int32" />
-          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Note" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="PassportScan" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="PassportScanFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Organization" Relationship="Self.FK_Visitor_Organization" FromRole="Visitor" ToRole="Organization" />
-          <NavigationProperty Name="RequestRejectionReason" Relationship="Self.Request_Visitor" FromRole="Visitor" ToRole="RequestRejectionReason" />
+          <Property Name="PassportScan" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="PassportScanFileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Organization" Relationship="memento_proModel.FK_Visitor_Organization" FromRole="Visitor" ToRole="Organization" />
+          <NavigationProperty Name="Request" Relationship="memento_proModel.Request_Visitor" FromRole="Visitor" ToRole="Request" />
         </EntityType>
         <EntityType Name="VisitPurpose">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Request" Relationship="Self.FK_Request_VisitPurpose" FromRole="VisitPurpose" ToRole="Request" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Request" Relationship="memento_proModel.FK_Request_VisitPurpose" FromRole="VisitPurpose" ToRole="Request" />
         </EntityType>
-        <Association Name="FK_Request_Division">
-          <End Role="Division" Type="Self.Division" Multiplicity="1" />
-          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+        <Association Name="FK_Employee_User">
+          <End Type="memento_proModel.User" Role="User" Multiplicity="1" />
+          <End Type="memento_proModel.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Division">
+            <Principal Role="User">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Request">
-              <PropertyRef Name="DivisionId" />
+            <Dependent Role="Employee">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Request_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <End Type="memento_proModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="memento_proModel.Request" Role="Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Id" />
@@ -472,8 +476,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Visitor_Organization">
-          <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
-          <End Role="Visitor" Type="Self.Visitor" Multiplicity="*" />
+          <End Type="memento_proModel.Organization" Role="Organization" Multiplicity="0..1" />
+          <End Type="memento_proModel.Visitor" Role="Visitor" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
               <PropertyRef Name="Id" />
@@ -484,8 +488,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Request_RequestStatus">
-          <End Role="RequestStatus" Type="Self.RequestStatus" Multiplicity="1" />
-          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <End Type="memento_proModel.RequestStatus" Role="RequestStatus" Multiplicity="1" />
+          <End Type="memento_proModel.Request" Role="Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RequestStatus">
               <PropertyRef Name="Id" />
@@ -496,8 +500,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Request_RequestType">
-          <End Role="RequestType" Type="Self.RequestType" Multiplicity="1" />
-          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <End Type="memento_proModel.RequestType" Role="RequestType" Multiplicity="1" />
+          <End Type="memento_proModel.Request" Role="Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RequestType">
               <PropertyRef Name="Id" />
@@ -507,21 +511,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Request_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Request" Type="Self.Request" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Request">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Request_VisitPurpose">
-          <End Role="VisitPurpose" Type="Self.VisitPurpose" Multiplicity="1" />
-          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <End Type="memento_proModel.VisitPurpose" Role="VisitPurpose" Multiplicity="1" />
+          <End Type="memento_proModel.Request" Role="Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="VisitPurpose">
               <PropertyRef Name="Id" />
@@ -532,63 +524,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Employee_Division">
-          <End Role="Division" Type="Self.Division" Multiplicity="*" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Type="memento_proModel.Division" Role="Division" Multiplicity="*" />
+          <End Type="memento_proModel.Employee" Role="Employee" Multiplicity="*" />
         </Association>
         <Association Name="Request_Visitor">
-          <End Role="RequestRejectionReason" Type="Self.RequestRejectionReason" Multiplicity="*" />
-          <End Role="Visitor" Type="Self.Visitor" Multiplicity="*" />
+          <End Type="memento_proModel.Request" Role="Request" Multiplicity="*" />
+          <End Type="memento_proModel.Visitor" Role="Visitor" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="memento_proEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Division" EntityType="Self.Division" />
-          <EntitySet Name="Employee" EntityType="Self.Employee" />
-          <EntitySet Name="Organization" EntityType="Self.Organization" />
-          <EntitySet Name="Request" EntityType="Self.Request" />
-          <EntitySet Name="RequestRejectionReason" EntityType="Self.RequestRejectionReason" />
-          <EntitySet Name="RequestStatus" EntityType="Self.RequestStatus" />
-          <EntitySet Name="RequestType" EntityType="Self.RequestType" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="User" EntityType="Self.User" />
-          <EntitySet Name="Visitor" EntityType="Self.Visitor" />
-          <EntitySet Name="VisitPurpose" EntityType="Self.VisitPurpose" />
-          <AssociationSet Name="FK_Request_Division" Association="Self.FK_Request_Division">
-            <End Role="Division" EntitySet="Division" />
-            <End Role="Request" EntitySet="Request" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Request_Employee" Association="Self.FK_Request_Employee">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="Request" EntitySet="Request" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Visitor_Organization" Association="Self.FK_Visitor_Organization">
-            <End Role="Organization" EntitySet="Organization" />
-            <End Role="Visitor" EntitySet="Visitor" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Request_RequestStatus" Association="Self.FK_Request_RequestStatus">
-            <End Role="RequestStatus" EntitySet="RequestStatus" />
-            <End Role="Request" EntitySet="Request" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Request_RequestType" Association="Self.FK_Request_RequestType">
-            <End Role="RequestType" EntitySet="RequestType" />
-            <End Role="Request" EntitySet="Request" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Request_User" Association="Self.FK_Request_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Request" EntitySet="Request" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Request_VisitPurpose" Association="Self.FK_Request_VisitPurpose">
-            <End Role="VisitPurpose" EntitySet="VisitPurpose" />
-            <End Role="Request" EntitySet="Request" />
-          </AssociationSet>
-          <AssociationSet Name="Employee_Division" Association="Self.Employee_Division">
-            <End Role="Division" EntitySet="Division" />
-            <End Role="Employee" EntitySet="Employee" />
-          </AssociationSet>
-          <AssociationSet Name="Request_Visitor" Association="Self.Request_Visitor">
-            <End Role="RequestRejectionReason" EntitySet="RequestRejectionReason" />
-            <End Role="Visitor" EntitySet="Visitor" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -597,134 +540,123 @@
           <EntitySetMapping Name="Division">
             <EntityTypeMapping TypeName="memento_proModel.Division">
               <MappingFragment StoreEntitySet="Division">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employee">
             <EntityTypeMapping TypeName="memento_proModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Organization">
             <EntityTypeMapping TypeName="memento_proModel.Organization">
               <MappingFragment StoreEntitySet="Organization">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Request">
             <EntityTypeMapping TypeName="memento_proModel.Request">
               <MappingFragment StoreEntitySet="Request">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
-                <ScalarProperty Name="RequestStatusId" ColumnName="RequestStatusId" />
-                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
-                <ScalarProperty Name="DesiredStartDate" ColumnName="DesiredStartDate" />
-                <ScalarProperty Name="DesiredExpirationDate" ColumnName="DesiredExpirationDate" />
-                <ScalarProperty Name="VisitPurposeId" ColumnName="VisitPurposeId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="VisitPurposeId" ColumnName="VisitPurposeId" />
+                <ScalarProperty Name="DesiredExpirationDate" ColumnName="DesiredExpirationDate" />
+                <ScalarProperty Name="DesiredStartDate" ColumnName="DesiredStartDate" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="RequestStatusId" ColumnName="RequestStatusId" />
+                <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RequestRejectionReason">
             <EntityTypeMapping TypeName="memento_proModel.RequestRejectionReason">
               <MappingFragment StoreEntitySet="RequestRejectionReason">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RequestStatus">
             <EntityTypeMapping TypeName="memento_proModel.RequestStatus">
               <MappingFragment StoreEntitySet="RequestStatus">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RequestType">
             <EntityTypeMapping TypeName="memento_proModel.RequestType">
               <MappingFragment StoreEntitySet="RequestType">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="memento_proModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="memento_proModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Visitor">
             <EntityTypeMapping TypeName="memento_proModel.Visitor">
               <MappingFragment StoreEntitySet="Visitor">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="PassportSeries" ColumnName="PassportSeries" />
-                <ScalarProperty Name="PassportNumber" ColumnName="PassportNumber" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="Photo" ColumnName="Photo" />
-                <ScalarProperty Name="PassportScan" ColumnName="PassportScan" />
                 <ScalarProperty Name="PassportScanFileName" ColumnName="PassportScanFileName" />
+                <ScalarProperty Name="PassportScan" ColumnName="PassportScan" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="PassportNumber" ColumnName="PassportNumber" />
+                <ScalarProperty Name="PassportSeries" ColumnName="PassportSeries" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VisitPurpose">
             <EntityTypeMapping TypeName="memento_proModel.VisitPurpose">
               <MappingFragment StoreEntitySet="VisitPurpose">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="Employee_Division" TypeName="memento_proModel.Employee_Division" StoreEntitySet="Employee_Division">
-            <EndProperty Name="Division">
-              <ScalarProperty Name="Id" ColumnName="DivisionId" />
-            </EndProperty>
             <EndProperty Name="Employee">
               <ScalarProperty Name="Id" ColumnName="EmployeeId" />
             </EndProperty>
+            <EndProperty Name="Division">
+              <ScalarProperty Name="Id" ColumnName="DivisionId" />
+            </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="Request_Visitor" TypeName="memento_proModel.Request_Visitor" StoreEntitySet="Request_Visitor">
-            <EndProperty Name="RequestRejectionReason">
-              <ScalarProperty Name="Id" ColumnName="RequestId" />
-            </EndProperty>
             <EndProperty Name="Visitor">
               <ScalarProperty Name="Id" ColumnName="VisitorId" />
+            </EndProperty>
+            <EndProperty Name="Request">
+              <ScalarProperty Name="Id" ColumnName="RequestId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

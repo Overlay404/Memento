@@ -36,7 +36,7 @@
                        Margin="10 5 0 5"
                        HorizontalAlignment="Left"/>
 
-            <local:TextBoxCustom NameTextBox="ApplicationValidityPeriod"
+            <local:TextBoxCustom x:Name="ApplicationValidityPeriod"
                                  Margin="10 0 10 0"/>
         </StackPanel>
     </Border>

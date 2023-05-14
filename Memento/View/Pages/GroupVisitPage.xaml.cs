@@ -21,14 +21,14 @@ namespace Memento.View.Pages
     /// </summary>
     public partial class GroupVisitPage : Page
     {
-        public string NameFile
+        public string NameFileTry
         {
             get { return (string)GetValue(NameFileProperty); }
             set { SetValue(NameFileProperty, value); }
         }
 
         public static readonly DependencyProperty NameFileProperty =
-            DependencyProperty.Register("NameFile", typeof(string), typeof(PersonVisitPage));
+            DependencyProperty.Register("NameFileTry", typeof(string), typeof(PersonVisitPage));
 
         public GroupVisitPage()
         {
@@ -37,7 +37,7 @@ namespace Memento.View.Pages
             AttachFile.MouseDown += (sender, e) =>
             {
                 AttachFile.Visibility = Visibility.Collapsed;
-                NameFile = OpenFileDialogSave();
+                NameFileTry = OpenFileDialogSave();
             };
         }
 

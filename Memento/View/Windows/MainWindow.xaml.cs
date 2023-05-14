@@ -14,7 +14,7 @@ namespace Memento.View.Windows
         {
             InitializeComponent();
             Instance = this;
-            MainFrame.Navigate(new SelectionPage());
+            MainFrame.Navigate(new AutorizationPage());
         }
     }
 }

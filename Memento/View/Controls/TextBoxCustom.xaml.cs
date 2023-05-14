@@ -8,16 +8,16 @@ namespace Memento.View.Controls
     /// </summary>
     public partial class TextBoxCustom : UserControl
     {
-        public static readonly DependencyProperty MyTextProperty = DependencyProperty.Register(
-            "NameTextBox",
-            typeof(string),
-            typeof(TextBoxCustom));
-
-        public string NameTextBox
+        public string TextInTextBox
         {
-            get { return (string)GetValue(MyTextProperty); }
-            set { SetValue(MyTextProperty, value); }
+            get { return (string)GetValue(TextInTextBoxProperty); }
+            set { SetValue(TextInTextBoxProperty, value); }
         }
+
+        public static readonly DependencyProperty TextInTextBoxProperty =
+            DependencyProperty.Register("TextInTextBox", typeof(string), typeof(TextBoxCustom));
+
+
 
         public TextBoxCustom()
         {

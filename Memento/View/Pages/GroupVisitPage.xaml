@@ -7,7 +7,8 @@
       xmlns:fa="http://schemas.fontawesome.io/icons/"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="GroupVisitPage">
+      Title="GroupVisitPage"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Grid x:Name="GridX">
         <Grid.ColumnDefinitions>
@@ -71,15 +72,15 @@
                     </StackPanel>
 
                     <StackPanel Grid.Column="1">
-                        <local:TextBoxCustom NameTextBox="Surname"
+                        <local:TextBoxCustom x:Name="Surname"
                                              Margin="0 0 0 7"/>
-                        <local:TextBoxCustom NameTextBox="Name"
+                        <local:TextBoxCustom x:Name="Name"
                                              Margin="0 0 0 7"/>
-                        <local:TextBoxCustom NameTextBox="Patronymic"
+                        <local:TextBoxCustom x:Name="Patronymic"
                                              Margin="0 0 0 7"/>
-                        <local:TextBoxCustom NameTextBox="Phone"
+                        <local:TextBoxCustom x:Name="Phone"
                                              Margin="0 0 0 7"/>
-                        <local:TextBoxCustom NameTextBox="Mail"
+                        <local:TextBoxCustom x:Name="Mail"
                                              Margin="0 0 0 7"/>
                     </StackPanel>
                 </Grid>
@@ -95,16 +96,16 @@
 
                     <StackPanel Grid.Column="1"
                                 Margin="0 0 10 0">
-                        <local:TextBoxCustom NameTextBox="Org"
+                        <local:TextBoxCustom x:Name="Org"
                                              Margin="0 0 0 7"/>
-                        <local:TextBoxCustom NameTextBox="Note"
+                        <local:TextBoxCustom x:Name="Note"
                                              Margin="0 0 0 7"/>
 
                         <DatePicker Margin="0 0 0 7"/>
 
-                        <local:TextBoxCustom NameTextBox="Series"
+                        <local:TextBoxCustom x:Name="Series"
                                              Margin="0 0 0 7"/>
-                        <local:TextBoxCustom NameTextBox="Number"
+                        <local:TextBoxCustom x:Name="Number"
                                              Margin="0 0 0 7"/>
                     </StackPanel>
 
@@ -155,7 +156,7 @@
                 <local:TextBlockCustom TextInTextBlock="Прикрепляемые документы"
                                         VerticalAlignment="Top"/>
 
-                <StackPanel Orientation="Horizontal">
+                <StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 x:Name="AttachFile"
                                 Margin="5 0 10 0">
@@ -177,7 +178,7 @@
                                          Foreground="Gray"
                                          Margin="0 0 10 0"/>
 
-                        <TextBlock Text="{Binding NameFile}"
+                        <TextBlock Text="{Binding NameFileTry}"
                                    FontWeight="Bold"
                                    FontSize="8"
                                    Foreground="Gray"

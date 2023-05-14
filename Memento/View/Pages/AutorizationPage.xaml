@@ -14,12 +14,12 @@
             
             <local:TextBlockCustom TextInTextBlock="Логин"
                                    Margin="0 10"/>
-            <local:TextBoxCustom NameTextBox="LoginTextBox"
-                                 Margin="0 10"/>
+            <local:TextBoxCustom 
+                                 Margin="0 10" x:Name="Login"/>
 
             <local:TextBlockCustom TextInTextBlock="Пароль"
                                     Margin="0 10"/>
-            <local:TextBoxCustom NameTextBox="PasswordTextBox"
+            <local:TextBoxCustom x:Name="Password"
                                  Margin="0 10"/>
             
             <StackPanel Orientation="Horizontal"

@@ -14,17 +14,8 @@ namespace Memento.Model
     
     public partial class RequestRejectionReason
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RequestRejectionReason()
-        {
-            this.Visitor = new HashSet<Visitor>();
-        }
-    
         public int Id { get; set; }
         public int RequestId { get; set; }
         public string Text { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Visitor> Visitor { get; set; }
     }
 }

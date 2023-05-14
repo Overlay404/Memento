@@ -17,7 +17,7 @@ namespace Memento.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Request = new HashSet<Request>();
+            this.Employee = new HashSet<Employee>();
         }
     
         public int Id { get; set; }
@@ -25,6 +25,6 @@ namespace Memento.Model
         public string Password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Request> Request { get; set; }
+        public virtual ICollection<Employee> Employee { get; set; }
     }
 }
