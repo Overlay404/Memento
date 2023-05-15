@@ -1,14 +1,16 @@
 ﻿using Memento.Model;
+using Memento.View.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Memento.View.Pages
 {
     /// <summary>
     /// Логика взаимодействия для RequestViewEmployee.xaml
     /// </summary>
-    public partial class RequestViewEmployee : Window
+    public partial class RequestViewEmployee : Page
     {
         public IEnumerable<(Visitor, Request)> RequestList
         {
@@ -49,6 +51,12 @@ namespace Memento.View.Pages
                 Connection.db.Request.Local.FirstOrDefault(x => x.Id == request.Id).RequestStatusId = 3;
 
             Connection.db.SaveChanges();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Instance.MainFrame.Navigate(new AutorizationPage());
+            Connection.UserEmployee = null;
         }
     }
 }

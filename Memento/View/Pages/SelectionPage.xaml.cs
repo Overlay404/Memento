@@ -1,4 +1,5 @@
-﻿using Memento.View.Windows;
+﻿using Memento.Model;
+using Memento.View.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -12,6 +13,21 @@ namespace Memento.View.Pages
         public SelectionPage()
         {
             InitializeComponent();
+
+            if (Connection.User == null)
+                ViewRequests.Visibility = System.Windows.Visibility.Collapsed;
+            else
+                ViewRequests.Visibility = System.Windows.Visibility.Visible;
+
+            EnterLogin.Click += (sender, e) =>
+            {
+                MainWindow.Instance.MainFrame.Navigate(new AutorizationPage());
+            };
+
+            ViewRequests.Click += (sender, e) =>
+            {
+                MainWindow.Instance.MainFrame.Navigate(new RequestViewEmployee());
+            };
         }
 
         private void GoToPerson(object sender, MouseButtonEventArgs e) =>

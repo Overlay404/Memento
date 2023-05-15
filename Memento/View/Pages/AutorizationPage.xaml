@@ -41,6 +41,9 @@
                         BorderBrush="#ff9619"
                         BorderThickness="3"/>
             </StackPanel>
+            <Button x:Name="SabmitRequest"
+                    Content="Оформить заявку без регистрации"
+                    Margin="0 10 0 0"/>
         </StackPanel>
     </Grid>
 </Page>

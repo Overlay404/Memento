@@ -41,6 +41,10 @@ namespace Memento.View.Pages
             {
                 MainWindow.Instance.MainFrame.Navigate(new AutorizationPage());
             };
+            SabmitRequest.Click += (sender, e) =>
+            {
+                MainWindow.Instance.MainFrame.Navigate(new SelectionPage());
+            };
         }
     }
 }

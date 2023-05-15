@@ -17,7 +17,7 @@ namespace Memento.View.Pages
 
             InBtn.Click += (sender, e) =>
             {
-                if(Connection.db.Visitor.FirstOrDefault(v => v.Login == Login.TextInTextBox.Trim() && v.Password == Password.TextInTextBox.Trim()) != null)
+                if (Connection.db.Visitor.FirstOrDefault(v => v.Login == Login.TextInTextBox.Trim() && v.Password == Password.TextInTextBox.Trim()) != null)
                 {
                     Connection.User = Connection.db.Visitor.FirstOrDefault(v => v.Login == Login.TextInTextBox.Trim() && v.Password == Password.TextInTextBox.Trim());
                     MainWindow.Instance.MainFrame.Navigate(new SelectionPage());
@@ -32,9 +32,15 @@ namespace Memento.View.Pages
                     MessageBox.Show("Такого пользователя не существует");
                 }
             };
+
             RegBtn.Click += (sender, e) =>
             {
                 MainWindow.Instance.MainFrame.Navigate(new RegistrationPage());
+            };
+
+            SabmitRequest.Click += (sender, e) =>
+            {
+                MainWindow.Instance.MainFrame.Navigate(new SelectionPage());
             };
         }
     }
