@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -104,7 +105,7 @@ namespace Memento.View.Pages
 
         private bool Validate(Regex emailRegex, Regex phoneRegex, VisitPurpose cbVisit, Division cbDivision, Employee cbEmpl)
         {
-            if (cbVisit == null || cbDivision == null || cbEmpl == null || DataPickerBithday.SelectedDate == null) return false;
+            if (cbVisit == null || cbDivision == null || cbEmpl == null) return false;
             if (string.IsNullOrEmpty(Surname.TextInTextBox) || string.IsNullOrEmpty(Name.TextInTextBox) || string.IsNullOrEmpty(Patronymic.TextInTextBox)) return false;
             if (emailRegex.IsMatch(Mail.TextInTextBox.Trim()) || phoneRegex.IsMatch(Phone.TextInTextBox.Trim())) return false;
             return true;

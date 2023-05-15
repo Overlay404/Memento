@@ -26,7 +26,7 @@ namespace Memento.View.Pages
 
             ViewRequests.Click += (sender, e) =>
             {
-                MainWindow.Instance.MainFrame.Navigate(new RequestViewEmployee());
+                MainWindow.Instance.MainFrame.Navigate(new RequestViewEmployee(Connection.User));
             };
         }
 

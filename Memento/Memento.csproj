@@ -117,6 +117,7 @@
     <Compile Include="Model\Visitor.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\VisitorRequest.cs" />
     <Compile Include="Model\VisitPurpose.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

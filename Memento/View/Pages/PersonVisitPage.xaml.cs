@@ -108,8 +108,15 @@ namespace Memento.View.Pages
                 int divisionId = Connection.db.Division.FirstOrDefault(d => d.Name == (cbDivision).Name).Id;
                 int employeeId = Connection.db.Employee.FirstOrDefault(em => em.LastName == (cbEmpl).LastName).Id;
 
+                Visitor visitor = new Visitor
+                {
+                    LastName = Surname.TextInTextBox.Trim(),
+                    FirstName = Name.TextInTextBox.Trim(),
+                    Patronymic = Patronymic.TextInTextBox.Trim(),
+                    BirthDate = DateTime.Today
+                };
 
-                Connection.db.Request.Add(new Request
+                Request request = new Request
                 {
                     RequestTypeId = 1,
                     RequestStatusId = 1,
@@ -118,15 +125,13 @@ namespace Memento.View.Pages
                     VisitPurpose = visitPurposeName,
                     DivisionId = divisionId,
                     EmployeeId = employeeId
-                });
+                };
 
-                Connection.db.Visitor.Add(new Visitor
-                {
-                    LastName = Surname.TextInTextBox.Trim(),
-                    FirstName = Name.TextInTextBox.Trim(),
-                    Patronymic = Patronymic.TextInTextBox.Trim(),
-                    BirthDate = DateTime.Today,
-                });
+                visitor.Request.Add(request);
+
+                Connection.db.Request.Add(request);
+
+                Connection.db.Visitor.Add(visitor);
 
                 try
                 {

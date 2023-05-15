@@ -16,26 +16,29 @@
         <DataGrid ItemsSource="{Binding RequestList}"
                   Name="RequestTable"
                   AutoGenerateColumns="False"
-                  CanUserResizeColumns="True" Grid.RowSpan="2">
+                  CanUserResizeColumns="True"
+                  Margin="10 0 10 0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя посетителя"
-                                    Binding="{Binding Item1.LastName}"/>
+                                    Binding="{Binding LastName}"/>
                 <DataGridTextColumn Header="Фамилия посетителя"
-                                    Binding="{Binding Item1.FirstName}"/>
+                                    Binding="{Binding FirstName}"/>
                 <DataGridTextColumn Header="Отчество посетителя"
-                                    Binding="{Binding Item1.Patronymic}"/>
+                                    Binding="{Binding Patronymic}"/>
                 <DataGridTextColumn Header="Номер"
-                                    Binding="{Binding Item2.Id}"/>
+                                    Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Тип заявки"
-                                    Binding="{Binding Item2.RequestType.Name}"/>
+                                    Binding="{Binding RequestTypeName}"/>
                 <DataGridTextColumn Header="Статус заявки"
-                                    Binding="{Binding Item2.RequestStatus.Name}"/>
+                                    Binding="{Binding RequestStatusName}"/>
                 <DataGridTextColumn Header="Начало"
-                                    Binding="{Binding Item2.DesiredStartDate}"/>
+                                    Binding="{Binding DesiredStartDate,
+                                                StringFormat=d}"/>
                 <DataGridTextColumn Header="Конец"
-                                    Binding="{Binding Item2.DesiredExpirationDate}"/>
+                                    Binding="{Binding DesiredExpirationDate, 
+                                                StringFormat=d}"/>
                 <DataGridTextColumn Header="Цель посещения"
-                                    Binding="{Binding Item2.VisitPurpose.Name}"/>
+                                    Binding="{Binding VisitPurposeName}"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -46,7 +49,8 @@
                 Padding="5 3"
                 Margin="20 0 0 0" Click="Button_Click_2"/>
 
-        <StackPanel Grid.Row="1"
+        <StackPanel x:Name="NavigationForEmployee"
+                    Grid.Row="1"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal"
                     VerticalAlignment="Center">

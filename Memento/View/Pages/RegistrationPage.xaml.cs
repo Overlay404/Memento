@@ -28,7 +28,7 @@ namespace Memento.View.Pages
 
             InBtn.Click += (sender, e) =>
             {
-                Connection.db.User.Add(new User
+                Connection.db.Visitor.Add(new Visitor
                 {
                     Login = Login.TextInTextBox.Trim(),
                     Password = Password.TextInTextBox.Trim()
