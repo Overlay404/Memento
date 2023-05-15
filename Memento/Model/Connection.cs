@@ -4,6 +4,9 @@ namespace Memento.Model
 {
     class Connection
     {
+        public static Visitor User { get; set; }  
+        public static User UserEmployee { get; set; }  
+
         #region Connection DB
         public static memento_proEntities db { get; set; } = new memento_proEntities();
 

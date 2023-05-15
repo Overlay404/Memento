@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bec4aaa8b16d4686b26ccc88cf786b61" Name="Diagram1" ZoomLevel="62">
+      <Diagram DiagramId="bec4aaa8b16d4686b26ccc88cf786b61" Name="Diagram1" ZoomLevel="106">
         <EntityTypeShape EntityType="memento_proModel.Division" Width="1.5" PointX="0.75" PointY="3.875" />
         <EntityTypeShape EntityType="memento_proModel.Employee" Width="1.5" PointX="3" PointY="3.375" />
         <EntityTypeShape EntityType="memento_proModel.Organization" Width="1.5" PointX="5.25" PointY="8.875" />
