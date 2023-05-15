@@ -30,9 +30,23 @@ namespace Memento.View.Controls
         public static readonly DependencyProperty DivisionsProperty =
             DependencyProperty.Register("Divisions", typeof(IEnumerable<Division>), typeof(TheHostViewCustom));
 
+
+
+
+        public IEnumerable<Employee> Employee
+        {
+            get { return (IEnumerable<Employee>)GetValue(EmployeeProperty); }
+            set { SetValue(EmployeeProperty, value); }
+        }
+
+        public static readonly DependencyProperty EmployeeProperty =
+            DependencyProperty.Register("Employee", typeof(IEnumerable<Employee>), typeof(TheHostViewCustom));
+
+
         public TheHostViewCustom()
         {
-            Divisions = Connection.db.Division.ToList();    
+            Divisions = Connection.db.Division.ToList();
+            Employee = Connection.db.Employee.ToList();
             InitializeComponent();
         }
     }

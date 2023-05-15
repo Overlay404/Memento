@@ -39,6 +39,10 @@ namespace Memento.View.Pages
                 AttachFile.Visibility = Visibility.Collapsed;
                 NameFileTry = OpenFileDialogSave();
             };
+            CreateRequestBtn.Click += (sender, e) =>
+            {
+
+            };
         }
 
         public static string OpenFileDialogSave()

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Memento.Model;
+using Memento.View.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,22 @@ namespace Memento.View.Pages
         public RegistrationPage()
         {
             InitializeComponent();
+
+            InBtn.Click += (sender, e) =>
+            {
+                Connection.db.User.Add(new User
+                {
+                    Login = Login.TextInTextBox.Trim(),
+                    Password = Password.TextInTextBox.Trim()
+                });
+                Connection.db.SaveChanges();
+
+                MainWindow.Instance.MainFrame.Navigate(new SelectionPage());
+            };
+            RegBtn.Click += (sender, e) =>
+            {
+                MainWindow.Instance.MainFrame.Navigate(new AutorizationPage());
+            };
         }
     }
 }

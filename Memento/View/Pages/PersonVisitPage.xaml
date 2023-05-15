@@ -216,6 +216,7 @@
             
             <Button Content="Оформить заявку"
                     Padding="20 5"
+                    x:Name="CreateRequestBtn"
                     BorderBrush="#ff9619"/>
         </StackPanel>
     </Grid>

@@ -36,6 +36,7 @@
         <local:TheHostViewCustom Grid.Row="1"
                                  Grid.Column="1"
                                  Grid.ColumnSpan="2"
+                                 x:Name="TheHostView"
                                  Margin="0 0 10 0" Loaded="TheHostViewCustom_Loaded"/>
 
         <Border Background="#f3f3f3"
@@ -203,6 +204,7 @@
 
             <Button Content="Оформить заявку"
                     Padding="20 5"
+                    x:Name="CreateRequestBtn"
                     BorderBrush="#ff9619"/>
         </StackPanel>
     </Grid>

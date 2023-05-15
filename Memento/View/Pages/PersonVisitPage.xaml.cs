@@ -50,12 +50,45 @@ namespace Memento.View.Pages
 
             InitializeComponent();
 
+            var PassInform = new PassInformationViewCustom();
+            var TheHostView = new TheHostViewCustom();
+
+            VisitPurpose cbVisit = PassInform.VisitPurposeCB.SelectedItem as VisitPurpose;
+
+            VisitPurpose visitPurposeName = Connection.db.VisitPurpose.FirstOrDefault(v => v.Name == (cbVisit).Name);
+            int divisionId = Connection.db.Division.FirstOrDefault(d => d.Name == (TheHostView.DivisionCB.SelectedItem as Division).Name).Id;
+            int employeeId = Connection.db.Employee.FirstOrDefault(em => em.LastName == (TheHostView.EmployeeCB.SelectedItem as Employee).LastName).Id;
+
             AttachFile.MouseDown += (sender, e) =>
             {
                 AttachFile.Visibility = Visibility.Collapsed;
                 NameFile = OpenFileDialogSave();
             };
             LoadImageBtn.Click += (sender, e) => { PhotoPerson = ConvertToImageSource(OpenImageDialogSave()); };
+            CreateRequestBtn.Click += (sender, e) =>
+            {
+                Connection.db.Request.Add(new Request
+                {
+                    RequestTypeId = 1,
+                    RequestStatusId = 1,
+                    DesiredStartDate = PassInform.WithDatePicker.SelectedDate ?? DateTime.Today,
+                    DesiredExpirationDate = PassInform.ByDatePicker.SelectedDate ?? DateTime.Today,
+                    VisitPurpose = visitPurposeName,
+                    DivisionId = divisionId,
+                    EmployeeId = employeeId
+                });
+
+                Connection.db.Visitor.Add(new Visitor 
+                {
+                    LastName = Surname.TextInTextBox.Trim(),
+                    FirstName = Name.TextInTextBox.Trim(),
+                    Patronymic = Patronymic.TextInTextBox.Trim()
+                });
+
+                Connection.db.SaveChanges();
+
+                MessageBox.Show($"Заявка на имя {Surname.TextInTextBox} {Name.TextInTextBox} {Patronymic.TextInTextBox} заполнена");
+            };
         }
 
         public static byte[] OpenImageDialogSave()

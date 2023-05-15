@@ -47,6 +47,7 @@
 
             <ComboBox HorizontalAlignment="Center"
                       Width="250"
+                      x:Name="VisitPurposeCB"
                       ItemsSource="{Binding VisitPurposes}"
                       Text="asdasd">
                 <ComboBox.ItemTemplate>
