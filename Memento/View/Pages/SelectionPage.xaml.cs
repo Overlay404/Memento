@@ -15,12 +15,13 @@ namespace Memento.View.Pages
             InitializeComponent();
 
             if (Connection.User == null)
-                ViewRequests.Visibility = System.Windows.Visibility.Collapsed;
+                EnterLogin.Content = "Войти в аккаунт";
             else
-                ViewRequests.Visibility = System.Windows.Visibility.Visible;
+                EnterLogin.Content = "Выйти из аккаунта";
 
             EnterLogin.Click += (sender, e) =>
             {
+                Connection.User = null;    
                 MainWindow.Instance.MainFrame.Navigate(new AutorizationPage());
             };
 

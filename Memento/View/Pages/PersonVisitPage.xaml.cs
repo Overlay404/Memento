@@ -92,33 +92,24 @@ namespace Memento.View.Pages
                 AttachFile.Visibility = Visibility.Collapsed;
                 NameFile = OpenFileDialogSave();
             };
+
             LoadImageBtn.Click += (sender, e) => { PhotoPerson = ConvertToImageSource(OpenImageDialogSave()); };
 
             CreateRequestBtn.Click += (sender, e) =>
             {
-                if (Connection.User == null)
-                    NewVisitorIfUserNull();
-                else
-                    NewVisitorIfUserNotNull();
-
                 try
                 {
-                    Connection.db.SaveChanges();
+                    if (Connection.User == null)
+                        NewVisitorIfUserNull();
+                    else
+                        NewVisitorIfUserNotNull();
                 }
-                catch (DbEntityValidationException ex)
+                catch
                 {
-                    List<string> mess = new List<string>();
-
-                    foreach (var entityValidationErrors in ex.EntityValidationErrors)
-                    {
-                        foreach (var validationError in entityValidationErrors.ValidationErrors)
-                        {
-                            mess.Add("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
-                        }
-                    }
-
-                    MessageBox.Show(string.Join("\n", mess));
+                    MessageBox.Show("Проверьте все поля на корректность");
                 }
+
+                Connection.db.SaveChanges();
 
                 MessageBox.Show($"Заявка на имя {Surname.TextInTextBox} {Name.TextInTextBox} {Patronymic.TextInTextBox} заполнена");
             };
@@ -127,24 +118,34 @@ namespace Memento.View.Pages
         private void NewVisitorIfUserNull()
         {
             
-                VisitPurpose cbVisit = VisitPurposeCB.SelectedItem as VisitPurpose;
-                Division cbDivision = DivisionCB.SelectedItem as Division;
-                Employee cbEmpl = EmployeeCB.SelectedItem as Employee;
+            VisitPurpose cbVisit = VisitPurposeCB.SelectedItem as VisitPurpose;
+            Division cbDivision = DivisionCB.SelectedItem as Division;
+            Employee cbEmpl = EmployeeCB.SelectedItem as Employee;
 
-                if (Validate(emailRegex, phoneRegex, cbVisit, cbDivision, cbEmpl))
-                {
-                    MessageBox.Show("Не введены или не соответсвуют формату данные");
-                }
+            if (Validate(emailRegex, phoneRegex, cbVisit, cbDivision, cbEmpl))
+            {
+                MessageBox.Show("Не введены или не соответсвуют формату данные");
+            }
 
-                VisitPurpose visitPurposeName = Connection.db.VisitPurpose.FirstOrDefault(v => v.Name == (cbVisit).Name);
-                int divisionId = Connection.db.Division.FirstOrDefault(d => d.Name == (cbDivision).Name).Id;
-                int employeeId = Connection.db.Employee.FirstOrDefault(em => em.LastName == (cbEmpl).LastName).Id;
+            VisitPurpose visitPurposeName = Connection.db.VisitPurpose.FirstOrDefault(v => v.Name == (cbVisit).Name);
+            int divisionId = Connection.db.Division.FirstOrDefault(d => d.Name == (cbDivision).Name).Id;
+            int employeeId = Connection.db.Employee.FirstOrDefault(em => em.LastName == (cbEmpl).LastName).Id;
+
+            Organization orgValue = Org.TextInTextBox == null ||
+                Connection.db.Organization.Local.FirstOrDefault(x => x.Name == Org.TextInTextBox.Trim()) == null 
+                ? null : new Organization() { Name = Org.TextInTextBox.Trim() };
 
             Visitor visitor = new Visitor
             {
                 LastName = Surname.TextInTextBox.Trim(),
                 FirstName = Name.TextInTextBox.Trim(),
                 Patronymic = Patronymic.TextInTextBox.Trim(),
+                Email = Mail.TextInTextBox == null ? null : Mail.TextInTextBox.Trim(),
+                Phone = Phone.TextInTextBox == null ? null : Phone.TextInTextBox.Trim(),
+                Organization = orgValue,
+                Note = Note.TextInTextBox == null ? null : Note.TextInTextBox.Trim(),
+                PassportNumber = Number.TextInTextBox == null ? null : Number.TextInTextBox.Trim(),
+                PassportSeries = Series.TextInTextBox == null ? null : Series.TextInTextBox.Trim(),
                 BirthDate = DateTime.Today
             };
 
@@ -182,12 +183,22 @@ namespace Memento.View.Pages
             int divisionId = Connection.db.Division.FirstOrDefault(d => d.Name == (cbDivision).Name).Id;
             int employeeId = Connection.db.Employee.FirstOrDefault(em => em.LastName == (cbEmpl).LastName).Id;
 
+            Organization orgValue = Org.TextInTextBox == null ||
+                Connection.db.Organization.Local.FirstOrDefault(x => x.Name == Org.TextInTextBox.Trim()) == null
+                ? null : new Organization() { Name = Org.TextInTextBox.Trim() };
+
 
             Connection.User.LastName = Surname.TextInTextBox.Trim();
             Connection.User.FirstName = Name.TextInTextBox.Trim();
             Connection.User.Patronymic = Patronymic.TextInTextBox.Trim();
             Connection.User.BirthDate = DateTime.Today;
-            
+            Connection.User.Email = Mail.TextInTextBox == null ? null : Mail.TextInTextBox.Trim();
+            Connection.User.Phone = Phone.TextInTextBox == null ? null : Phone.TextInTextBox.Trim();
+            Connection.User.Organization = orgValue;
+            Connection.User.Note = Note.TextInTextBox == null ? null : Note.TextInTextBox.Trim();
+            Connection.User.PassportNumber = Number.TextInTextBox == null ? null : Note.TextInTextBox.Trim();
+            Connection.User.PassportSeries = Series.TextInTextBox == null ? null : Series.TextInTextBox.Trim();
+
 
             Request request = new Request
             {
