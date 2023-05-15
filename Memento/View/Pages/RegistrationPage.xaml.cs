@@ -28,13 +28,16 @@ namespace Memento.View.Pages
 
             InBtn.Click += (sender, e) =>
             {
-                Connection.db.Visitor.Add(new Visitor
+                Visitor visitor = new Visitor
                 {
                     Login = Login.TextInTextBox.Trim(),
                     Password = Password.TextInTextBox.Trim()
-                });
+                };
+
+                Connection.db.Visitor.Add(visitor);
                 Connection.db.SaveChanges();
 
+                Connection.User = visitor;
                 MainWindow.Instance.MainFrame.Navigate(new SelectionPage());
             };
             RegBtn.Click += (sender, e) =>

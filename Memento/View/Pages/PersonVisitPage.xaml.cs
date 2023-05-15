@@ -93,45 +93,13 @@ namespace Memento.View.Pages
                 NameFile = OpenFileDialogSave();
             };
             LoadImageBtn.Click += (sender, e) => { PhotoPerson = ConvertToImageSource(OpenImageDialogSave()); };
+
             CreateRequestBtn.Click += (sender, e) =>
             {
-                VisitPurpose cbVisit = VisitPurposeCB.SelectedItem as VisitPurpose;
-                Division cbDivision = DivisionCB.SelectedItem as Division;
-                Employee cbEmpl = EmployeeCB.SelectedItem as Employee;
-
-                if(Validate(emailRegex, phoneRegex, cbVisit, cbDivision, cbEmpl))
-                {
-                    MessageBox.Show("Не введены или не соответсвуют формату данные");
-                }
-
-                VisitPurpose visitPurposeName = Connection.db.VisitPurpose.FirstOrDefault(v => v.Name == (cbVisit).Name);
-                int divisionId = Connection.db.Division.FirstOrDefault(d => d.Name == (cbDivision).Name).Id;
-                int employeeId = Connection.db.Employee.FirstOrDefault(em => em.LastName == (cbEmpl).LastName).Id;
-
-                Visitor visitor = new Visitor
-                {
-                    LastName = Surname.TextInTextBox.Trim(),
-                    FirstName = Name.TextInTextBox.Trim(),
-                    Patronymic = Patronymic.TextInTextBox.Trim(),
-                    BirthDate = DateTime.Today
-                };
-
-                Request request = new Request
-                {
-                    RequestTypeId = 1,
-                    RequestStatusId = 1,
-                    DesiredStartDate = WithDatePicker.SelectedDate ?? DateTime.Today,
-                    DesiredExpirationDate = ByDatePicker.SelectedDate ?? DateTime.Today,
-                    VisitPurpose = visitPurposeName,
-                    DivisionId = divisionId,
-                    EmployeeId = employeeId
-                };
-
-                visitor.Request.Add(request);
-
-                Connection.db.Request.Add(request);
-
-                Connection.db.Visitor.Add(visitor);
+                if (Connection.User == null)
+                    NewVisitorIfUserNull();
+                else
+                    NewVisitorIfUserNotNull();
 
                 try
                 {
@@ -154,6 +122,87 @@ namespace Memento.View.Pages
 
                 MessageBox.Show($"Заявка на имя {Surname.TextInTextBox} {Name.TextInTextBox} {Patronymic.TextInTextBox} заполнена");
             };
+        }
+
+        private void NewVisitorIfUserNull()
+        {
+            
+                VisitPurpose cbVisit = VisitPurposeCB.SelectedItem as VisitPurpose;
+                Division cbDivision = DivisionCB.SelectedItem as Division;
+                Employee cbEmpl = EmployeeCB.SelectedItem as Employee;
+
+                if (Validate(emailRegex, phoneRegex, cbVisit, cbDivision, cbEmpl))
+                {
+                    MessageBox.Show("Не введены или не соответсвуют формату данные");
+                }
+
+                VisitPurpose visitPurposeName = Connection.db.VisitPurpose.FirstOrDefault(v => v.Name == (cbVisit).Name);
+                int divisionId = Connection.db.Division.FirstOrDefault(d => d.Name == (cbDivision).Name).Id;
+                int employeeId = Connection.db.Employee.FirstOrDefault(em => em.LastName == (cbEmpl).LastName).Id;
+
+            Visitor visitor = new Visitor
+            {
+                LastName = Surname.TextInTextBox.Trim(),
+                FirstName = Name.TextInTextBox.Trim(),
+                Patronymic = Patronymic.TextInTextBox.Trim(),
+                BirthDate = DateTime.Today
+            };
+
+            Request request = new Request
+            {
+                RequestTypeId = 1,
+                RequestStatusId = 1,
+                DesiredStartDate = WithDatePicker.SelectedDate ?? DateTime.Today,
+                DesiredExpirationDate = ByDatePicker.SelectedDate ?? DateTime.Today,
+                VisitPurpose = visitPurposeName,
+                DivisionId = divisionId,
+                EmployeeId = employeeId
+            };
+
+            visitor.Request.Add(request);
+
+            Connection.db.Request.Add(request);
+
+            Connection.db.Visitor.Add(visitor);
+        }
+
+        private void NewVisitorIfUserNotNull()
+        {
+
+            VisitPurpose cbVisit = VisitPurposeCB.SelectedItem as VisitPurpose;
+            Division cbDivision = DivisionCB.SelectedItem as Division;
+            Employee cbEmpl = EmployeeCB.SelectedItem as Employee;
+
+            if (Validate(emailRegex, phoneRegex, cbVisit, cbDivision, cbEmpl))
+            {
+                MessageBox.Show("Не введены или не соответсвуют формату данные");
+            }
+
+            VisitPurpose visitPurposeName = Connection.db.VisitPurpose.FirstOrDefault(v => v.Name == (cbVisit).Name);
+            int divisionId = Connection.db.Division.FirstOrDefault(d => d.Name == (cbDivision).Name).Id;
+            int employeeId = Connection.db.Employee.FirstOrDefault(em => em.LastName == (cbEmpl).LastName).Id;
+
+
+            Connection.User.LastName = Surname.TextInTextBox.Trim();
+            Connection.User.FirstName = Name.TextInTextBox.Trim();
+            Connection.User.Patronymic = Patronymic.TextInTextBox.Trim();
+            Connection.User.BirthDate = DateTime.Today;
+            
+
+            Request request = new Request
+            {
+                RequestTypeId = 1,
+                RequestStatusId = 1,
+                DesiredStartDate = WithDatePicker.SelectedDate ?? DateTime.Today,
+                DesiredExpirationDate = ByDatePicker.SelectedDate ?? DateTime.Today,
+                VisitPurpose = visitPurposeName,
+                DivisionId = divisionId,
+                EmployeeId = employeeId
+            };
+
+            Connection.User.Request.Add(request);
+
+            Connection.db.Request.Add(request);
         }
 
         private bool Validate(Regex emailRegex, Regex phoneRegex, VisitPurpose cbVisit, Division cbDivision, Employee cbEmpl)

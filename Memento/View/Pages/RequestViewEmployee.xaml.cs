@@ -118,8 +118,13 @@ namespace Memento.View.Pages
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            MainWindow.Instance.MainFrame.Navigate(new AutorizationPage());
-            Connection.UserEmployee = null;
+            if (Connection.User != null)
+                MainWindow.Instance.MainFrame.Navigate(new SelectionPage());
+            else
+            {
+                MainWindow.Instance.MainFrame.Navigate(new AutorizationPage());
+                Connection.UserEmployee = null;
+            }
         }
     }
 }
