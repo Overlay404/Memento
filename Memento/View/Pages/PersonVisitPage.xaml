@@ -260,7 +260,7 @@
                 <local:TextBlockCustom TextInTextBlock="Прикрепляемые документы"
                                         VerticalAlignment="Top"/>
 
-                <StackPanel Orientation="Horizontal">
+                <StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 x:Name="AttachFile"
                                 Margin="5 0 10 0">

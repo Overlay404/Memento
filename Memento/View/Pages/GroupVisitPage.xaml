@@ -160,11 +160,11 @@
                     </StackPanel>
 
                     <StackPanel Grid.Column="1">
-                        <local:TextBoxCustom x:Name="Surname"
+                        <local:TextBoxCustom x:Name="SurnameInForm"
                                              Margin="0 0 0 7"/>
-                        <local:TextBoxCustom x:Name="Name"
+                        <local:TextBoxCustom x:Name="NameInForm"
                                              Margin="0 0 0 7"/>
-                        <local:TextBoxCustom x:Name="Patronymic"
+                        <local:TextBoxCustom x:Name="PatronymicnForm"
                                              Margin="0 0 0 7"/>
                         <local:TextBoxCustom x:Name="Phone"
                                              Margin="0 0 0 7"/>
@@ -180,6 +180,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="0.2*"/>
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="1"
@@ -218,6 +219,9 @@
                                    Margin="0 0 0 7"  
                                    Height="20.5"/>
                     </StackPanel>
+                    <fa:ImageAwesome Icon="Plus" Width="14" Grid.Column="2"
+                                     VerticalAlignment="Bottom" Margin="0 0 0 10"
+                                     x:Name="AddingVisitor"/>
                 </Grid>
             </Grid>
         </Border>
@@ -227,11 +231,22 @@
                 Grid.Column="2"
                 Margin="10 10 10 0"
                 CornerRadius="10">
+            <StackPanel>
                 <local:TextBlockCustom TextInTextBlock="Список посетителей"
                                        VerticalAlignment="Top"
                                        Grid.ColumnSpan="3"/>
-
-
+                <ListView x:Name="ListVisitor" Background="Transparent" ItemsSource="{Binding Visitors}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding LastName}" Margin="0 0 10 0"/>
+                                <TextBlock Text="{Binding FirstName}" Margin="0 0 10 0"/>
+                                <TextBlock Text="{Binding Patronymic}" Margin="0 0 10 0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+            </ListView>
+            </StackPanel>
         </Border>
 
         <Border Background="#f3f3f3"
