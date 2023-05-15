@@ -1,19 +1,8 @@
 ﻿using Memento.Model;
 using Memento.View.Windows;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Memento.View.Pages
 {
@@ -28,9 +17,15 @@ namespace Memento.View.Pages
 
             InBtn.Click += (sender, e) =>
             {
-                if(Connection.db.User.FirstOrDefault(v => v.Login == Login.TextInTextBox.Trim() && v.Password == Password.TextInTextBox.Trim()) != null)
+                if(Connection.db.Visitor.FirstOrDefault(v => v.Login == Login.TextInTextBox.Trim() && v.Password == Password.TextInTextBox.Trim()) != null)
                 {
+                    Connection.User = Connection.db.Visitor.FirstOrDefault(v => v.Login == Login.TextInTextBox.Trim() && v.Password == Password.TextInTextBox.Trim());
                     MainWindow.Instance.MainFrame.Navigate(new SelectionPage());
+                }
+                else if (Connection.db.User.FirstOrDefault(v => v.Login == Login.TextInTextBox.Trim() && v.Password == Password.TextInTextBox.Trim()) != null)
+                {
+                    Connection.UserEmployee = Connection.db.User.FirstOrDefault(v => v.Login == Login.TextInTextBox.Trim() && v.Password == Password.TextInTextBox.Trim());
+                    MainWindow.Instance.MainFrame.Navigate(new RequestViewEmployee());
                 }
                 else
                 {

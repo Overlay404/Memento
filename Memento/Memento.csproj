@@ -141,6 +141,9 @@
     <Compile Include="View\Pages\RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\RequestViewEmployee.xaml.cs">
+      <DependentUpon>RequestViewEmployee.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\SelectionPage.xaml.cs">
       <DependentUpon>SelectionPage.xaml</DependentUpon>
     </Compile>
@@ -224,6 +227,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\RegistrationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\RequestViewEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,54 @@
+﻿<Window x:Class="Memento.View.Pages.RequestViewEmployee"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Memento.View.Pages"
+        mc:Ignorable="d"
+        Title="Заявки" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <DataGrid ItemsSource="{Binding RequestList}"
+                  Name="RequestTable"
+                  AutoGenerateColumns="False"
+                  CanUserResizeColumns="True" Grid.RowSpan="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Имя посетителя"
+                                    Binding="{Binding Item1.LastName}"/>
+                <DataGridTextColumn Header="Фамилия посетителя"
+                                    Binding="{Binding Item1.FirstName}"/>
+                <DataGridTextColumn Header="Отчество посетителя"
+                                    Binding="{Binding Item1.Patronymic}"/>
+                <DataGridTextColumn Header="Номер"
+                                    Binding="{Binding Item2.Id}"/>
+                <DataGridTextColumn Header="Тип заявки"
+                                    Binding="{Binding Item2.RequestType.Name}"/>
+                <DataGridTextColumn Header="Статус заявки"
+                                    Binding="{Binding Item2.RequestStatus.Name}"/>
+                <DataGridTextColumn Header="Начало"
+                                    Binding="{Binding Item2.DesiredStartDate}"/>
+                <DataGridTextColumn Header="Конец"
+                                    Binding="{Binding Item2.DesiredExpirationDate}"/>
+                <DataGridTextColumn Header="Цель посещения"
+                                    Binding="{Binding Item2.VisitPurpose.Name}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="1"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center">
+            <Button Content="Одобрить"
+                    Margin="0 0 20 0"
+                    Padding="5 3" Click="Button_Click"/>
+            <Button Content="Отклонить"
+                    Margin="0 0 20 0"
+                    Padding="5 3" Click="Button_Click_1"/>
+        </StackPanel>
+    </Grid>
+</Window>
