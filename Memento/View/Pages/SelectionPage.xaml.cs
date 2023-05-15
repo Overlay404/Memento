@@ -1,5 +1,6 @@
 ﻿using Memento.Model;
 using Memento.View.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -10,8 +11,15 @@ namespace Memento.View.Pages
     /// </summary>
     public partial class SelectionPage : Page
     {
+        public Visibility flag { get; set; } = Visibility.Visible;
+
         public SelectionPage()
         {
+            if (Connection.User == null)
+                flag = Visibility.Collapsed;
+            else
+                flag = Visibility.Visible;
+
             InitializeComponent();
 
             if (Connection.User == null)
