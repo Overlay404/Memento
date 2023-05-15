@@ -85,7 +85,22 @@ namespace Memento.View.Pages
             VisitPurposes = Connection.db.VisitPurpose.ToList();
 
             InitializeComponent();
-            
+
+            Series.KeyDown += (sender, e) =>
+            {
+                if (new KeyConverter().ConvertToString(e.Key).All(letter => char.IsLetter(letter)))
+                    e.Handled = true;
+            };
+            Number.KeyDown += (sender, e) =>
+            {
+                if (new KeyConverter().ConvertToString(e.Key).All(letter => char.IsLetter(letter)))
+                    e.Handled = true;
+            };
+            Phone.KeyDown += (sender, e) =>
+            {
+                if (new KeyConverter().ConvertToString(e.Key).All(letter => char.IsLetter(letter)))
+                    e.Handled = true;
+            };
 
             AttachFile.MouseDown += (sender, e) =>
             {
@@ -174,10 +189,7 @@ namespace Memento.View.Pages
             Division cbDivision = DivisionCB.SelectedItem as Division;
             Employee cbEmpl = EmployeeCB.SelectedItem as Employee;
 
-            if (Validate(emailRegex, phoneRegex, cbVisit, cbDivision, cbEmpl))
-            {
-                MessageBox.Show("Не введены или не соответсвуют формату данные");
-            }
+           
 
             VisitPurpose visitPurposeName = Connection.db.VisitPurpose.FirstOrDefault(v => v.Name == (cbVisit).Name);
             int divisionId = Connection.db.Division.FirstOrDefault(d => d.Name == (cbDivision).Name).Id;
@@ -214,13 +226,19 @@ namespace Memento.View.Pages
             Connection.User.Request.Add(request);
 
             Connection.db.Request.Add(request);
+
+            if (Validate(emailRegex, phoneRegex))
+            {
+                MessageBox.Show("Не введены или не соответсвуют формату данные");
+            }
         }
 
-        private bool Validate(Regex emailRegex, Regex phoneRegex, VisitPurpose cbVisit, Division cbDivision, Employee cbEmpl)
+        private bool Validate(Regex emailRegex, Regex phoneRegex)
         {
-            if (cbVisit == null || cbDivision == null || cbEmpl == null || DataPickerBithday.SelectedDate == null) return false;
-            if (string.IsNullOrEmpty(Surname.TextInTextBox) || string.IsNullOrEmpty(Name.TextInTextBox) || string.IsNullOrEmpty(Patronymic.TextInTextBox)) return false;
-            if (emailRegex.IsMatch(Mail.TextInTextBox.Trim()) || phoneRegex.IsMatch(Phone.TextInTextBox.Trim())) return false;
+            if (Mail.TextInTextBox != null || Phone.TextInTextBox != null)
+            {
+                if (phoneRegex.IsMatch(Phone.TextInTextBox) || emailRegex.IsMatch(Mail.TextInTextBox)) return false;
+            }
             return true;
         }
 

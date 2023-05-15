@@ -88,6 +88,22 @@ namespace Memento.View.Pages
             Visitors = new List<Visitor>();
             InitializeComponent();
 
+            Series.KeyDown += (sender, e) => 
+            {
+                if (new KeyConverter().ConvertToString(e.Key).All(letter => char.IsLetter(letter)))
+                    e.Handled = true;
+            };
+            Number.KeyDown += (sender, e) =>
+            {
+                if (new KeyConverter().ConvertToString(e.Key).All(letter => char.IsLetter(letter)))
+                    e.Handled = true;
+            };
+            Phone.KeyDown += (sender, e) =>
+            {
+                if (new KeyConverter().ConvertToString(e.Key).All(letter => char.IsLetter(letter)))
+                    e.Handled = true;
+            };
+
             AttachFile.MouseDown += (sender, e) =>
             {
                 AttachFile.Visibility = Visibility.Collapsed;
@@ -100,11 +116,6 @@ namespace Memento.View.Pages
                     VisitPurpose cbVisit = VisitPurposeCB.SelectedItem as VisitPurpose;
                     Division cbDivision = DivisionCB.SelectedItem as Division;
                     Employee cbEmpl = EmployeeCB.SelectedItem as Employee;
-
-                    if (!Validate(emailRegex, phoneRegex, cbVisit, cbDivision, cbEmpl))
-                    {
-                        MessageBox.Show("Не введены или не соответсвуют формату данные");
-                    }
 
                     VisitPurpose visitPurposeName = Connection.db.VisitPurpose.FirstOrDefault(v => v.Name == (cbVisit).Name);
                     int divisionId = Connection.db.Division.FirstOrDefault(d => d.Name == (cbDivision).Name).Id;
@@ -145,10 +156,15 @@ namespace Memento.View.Pages
                     Visitors.Add(visitor);
                     ListVisitor.ItemsSource = Visitors;
                     ListVisitor.Items.Refresh();
+
+                    if (!Validate(emailRegex, phoneRegex))
+                    {
+                        MessageBox.Show("Не введены или не соответсвуют формату данные");
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Не заполнены все основные поля");
+                    MessageBox.Show("Не введены или не соответсвуют формату данные");
                 }
             };
             CreateRequestBtn.Click += (sender, e) =>
@@ -176,10 +192,12 @@ namespace Memento.View.Pages
             };
         }
 
-        private bool Validate(Regex emailRegex, Regex phoneRegex, VisitPurpose cbVisit, Division cbDivision, Employee cbEmpl)
+        private bool Validate(Regex emailRegex, Regex phoneRegex)
         {
-            if (cbVisit == null || cbDivision == null || cbEmpl == null) return false;
-            if (string.IsNullOrEmpty(SurnameInForm.TextInTextBox) || string.IsNullOrEmpty(NameInForm.TextInTextBox) || string.IsNullOrEmpty(PatronymicnForm.TextInTextBox)) return false;
+            if(Mail.TextInTextBox != null || Phone.TextInTextBox != null)
+            {
+                if (phoneRegex.IsMatch(Phone.TextInTextBox) || emailRegex.IsMatch(Mail.TextInTextBox)) return false;
+            }
             return true;
         }
 
