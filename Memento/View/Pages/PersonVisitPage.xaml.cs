@@ -1,5 +1,6 @@
 ﻿using Memento.Model;
 using Memento.View.Controls;
+using Memento.View.Windows;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -101,7 +102,10 @@ namespace Memento.View.Pages
                 if (new KeyConverter().ConvertToString(e.Key).All(letter => char.IsLetter(letter)))
                     e.Handled = true;
             };
-
+            ClearForm.Click += (sender, e) =>
+            {
+                MainWindow.Instance.MainFrame.Navigate(new PersonVisitPage());
+            };
             AttachFile.MouseDown += (sender, e) =>
             {
                 AttachFile.Visibility = Visibility.Collapsed;
@@ -124,7 +128,24 @@ namespace Memento.View.Pages
                     MessageBox.Show("Проверьте все поля на корректность");
                 }
 
-                Connection.db.SaveChanges();
+                try
+                {
+                    Connection.db.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    List<string> mess = new List<string>();
+
+                    foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                    {
+                        foreach (var validationError in entityValidationErrors.ValidationErrors)
+                        {
+                            mess.Add("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                        }
+                    }
+
+                    MessageBox.Show(string.Join("\n", mess));
+                }
 
                 MessageBox.Show($"Заявка на имя {Surname.TextInTextBox} {Name.TextInTextBox} {Patronymic.TextInTextBox} заполнена");
             };
@@ -137,7 +158,7 @@ namespace Memento.View.Pages
             Division cbDivision = DivisionCB.SelectedItem as Division;
             Employee cbEmpl = EmployeeCB.SelectedItem as Employee;
 
-            if (Validate(emailRegex, phoneRegex, cbVisit, cbDivision, cbEmpl))
+            if (Validate(emailRegex, phoneRegex))
             {
                 MessageBox.Show("Не введены или не соответсвуют формату данные");
             }
@@ -180,6 +201,11 @@ namespace Memento.View.Pages
             Connection.db.Request.Add(request);
 
             Connection.db.Visitor.Add(visitor);
+
+            if (Validate(emailRegex, phoneRegex))
+            {
+                MessageBox.Show("Не введены или не соответсвуют формату данные");
+            }
         }
 
         private void NewVisitorIfUserNotNull()
@@ -282,6 +308,11 @@ namespace Memento.View.Pages
                 return openFile.FileName;
             }
             return null;
+        }
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+            MainWindow.Instance.MainFrame.Navigate(new SelectionPage());
         }
     }
 }

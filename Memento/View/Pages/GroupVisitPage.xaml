@@ -299,8 +299,15 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom">
 
+            <Button Content="Назад"
+                Grid.Row="1"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                Padding="5 3"
+                Margin="20 0 0 0" Click="Button_Click_2"/>
             <Button Content="Очитить форму"
                     Padding="20 5"
+                    x:Name="ClearForm"
                     BorderBrush="Transparent"
                     Foreground="Gray"/>
 

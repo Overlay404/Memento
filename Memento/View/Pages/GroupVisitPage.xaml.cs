@@ -1,4 +1,5 @@
 ﻿using Memento.Model;
+using Memento.View.Windows;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -103,7 +104,10 @@ namespace Memento.View.Pages
                 if (new KeyConverter().ConvertToString(e.Key).All(letter => char.IsLetter(letter)))
                     e.Handled = true;
             };
-
+            ClearForm.Click += (sender, e) =>
+            {
+                MainWindow.Instance.MainFrame.Navigate(new GroupVisitPage());
+            };
             AttachFile.MouseDown += (sender, e) =>
             {
                 AttachFile.Visibility = Visibility.Collapsed;
@@ -217,6 +221,12 @@ namespace Memento.View.Pages
         private void TheHostViewCustom_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+            MainWindow.Instance.MainFrame.Navigate(new SelectionPage());
         }
     }
 }
