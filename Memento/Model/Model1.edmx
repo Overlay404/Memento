@@ -9,14 +9,14 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Patronymic" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -34,22 +34,22 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="Request">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="RequestTypeId" Type="int" Nullable="false" />
-          <Property Name="RequestStatusId" Type="int" Nullable="false" />
-          <Property Name="DivisionId" Type="int" Nullable="false" />
-          <Property Name="DesiredStartDate" Type="date" Nullable="false" />
-          <Property Name="DesiredExpirationDate" Type="date" Nullable="false" />
-          <Property Name="VisitPurposeId" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestTypeId" Type="int" />
+          <Property Name="RequestStatusId" Type="int" />
+          <Property Name="DivisionId" Type="int" />
+          <Property Name="DesiredStartDate" Type="date" />
+          <Property Name="DesiredExpirationDate" Type="date" />
+          <Property Name="VisitPurposeId" Type="int" />
           <Property Name="UserId" Type="int" />
-          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
         </EntityType>
         <EntityType Name="Request_Visitor">
           <Key>
@@ -63,7 +63,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RequestId" Type="int" Nullable="false" />
           <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
@@ -71,15 +71,25 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -93,28 +103,28 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
           <Property Name="Phone" Type="char" MaxLength="20" />
-          <Property Name="Email" Type="nvarchar" MaxLength="320" Nullable="false" />
-          <Property Name="BirthDate" Type="date" Nullable="false" />
-          <Property Name="PassportSeries" Type="char" MaxLength="4" Nullable="false" />
-          <Property Name="PassportNumber" Type="char" MaxLength="6" Nullable="false" />
-          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="320" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="PassportSeries" Type="char" MaxLength="4" />
+          <Property Name="PassportNumber" Type="char" MaxLength="6" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="OrganizationId" Type="int" />
-          <Property Name="Note" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" />
           <Property Name="Photo" Type="varbinary(max)" />
-          <Property Name="PassportScan" Type="varbinary(max)" Nullable="false" />
-          <Property Name="PassportScanFileName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PassportScan" Type="varbinary(max)" />
+          <Property Name="PassportScanFileName" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="VisitPurpose">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <Association Name="FK_Employee_Division_Division">
@@ -154,7 +164,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Request_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="Request" Type="Self.Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
@@ -166,7 +176,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Request_RequestStatus">
-          <End Role="RequestStatus" Type="Self.RequestStatus" Multiplicity="1" />
+          <End Role="RequestStatus" Type="Self.RequestStatus" Multiplicity="0..1" />
           <End Role="Request" Type="Self.Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RequestStatus">
@@ -178,7 +188,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Request_RequestType">
-          <End Role="RequestType" Type="Self.RequestType" Multiplicity="1" />
+          <End Role="RequestType" Type="Self.RequestType" Multiplicity="0..1" />
           <End Role="Request" Type="Self.Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RequestType">
@@ -214,7 +224,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Request_VisitPurpose">
-          <End Role="VisitPurpose" Type="Self.VisitPurpose" Multiplicity="1" />
+          <End Role="VisitPurpose" Type="Self.VisitPurpose" Multiplicity="0..1" />
           <End Role="Request" Type="Self.Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="VisitPurpose">
@@ -247,6 +257,7 @@
           <EntitySet Name="RequestRejectionReason" EntityType="Self.RequestRejectionReason" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequestStatus" EntityType="Self.RequestStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequestType" EntityType="Self.RequestType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Visitor" EntityType="Self.Visitor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VisitPurpose" EntityType="Self.VisitPurpose" Schema="dbo" store:Type="Tables" />
@@ -303,6 +314,7 @@
           <EntitySet Name="RequestRejectionReason" EntityType="memento_proModel.RequestRejectionReason" />
           <EntitySet Name="RequestStatus" EntityType="memento_proModel.RequestStatus" />
           <EntitySet Name="RequestType" EntityType="memento_proModel.RequestType" />
+          <EntitySet Name="sysdiagrams" EntityType="memento_proModel.sysdiagrams" />
           <EntitySet Name="User" EntityType="memento_proModel.User" />
           <EntitySet Name="Visitor" EntityType="memento_proModel.Visitor" />
           <EntitySet Name="VisitPurpose" EntityType="memento_proModel.VisitPurpose" />
@@ -343,7 +355,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Employee" Relationship="memento_proModel.Employee_Division" FromRole="Division" ToRole="Employee" />
         </EntityType>
@@ -351,7 +363,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Patronymic" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -364,7 +376,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Visitor" Relationship="memento_proModel.FK_Visitor_Organization" FromRole="Organization" ToRole="Visitor" />
         </EntityType>
@@ -372,15 +384,15 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
-          <Property Name="RequestStatusId" Type="Int32" Nullable="false" />
-          <Property Name="DivisionId" Type="Int32" Nullable="false" />
-          <Property Name="DesiredStartDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DesiredExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="VisitPurposeId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestTypeId" Type="Int32" />
+          <Property Name="RequestStatusId" Type="Int32" />
+          <Property Name="DivisionId" Type="Int32" />
+          <Property Name="DesiredStartDate" Type="DateTime" Precision="0" />
+          <Property Name="DesiredExpirationDate" Type="DateTime" Precision="0" />
+          <Property Name="VisitPurposeId" Type="Int32" />
           <Property Name="UserId" Type="Int32" />
-          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" />
           <NavigationProperty Name="Employee" Relationship="memento_proModel.FK_Request_Employee" FromRole="Request" ToRole="Employee" />
           <NavigationProperty Name="RequestStatus" Relationship="memento_proModel.FK_Request_RequestStatus" FromRole="Request" ToRole="RequestStatus" />
           <NavigationProperty Name="RequestType" Relationship="memento_proModel.FK_Request_RequestType" FromRole="Request" ToRole="RequestType" />
@@ -391,7 +403,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RequestId" Type="Int32" Nullable="false" />
           <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -399,7 +411,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Request" Relationship="memento_proModel.FK_Request_RequestStatus" FromRole="RequestStatus" ToRole="Request" />
         </EntityType>
@@ -407,9 +419,19 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Request" Relationship="memento_proModel.FK_Request_RequestType" FromRole="RequestType" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -424,22 +446,22 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="320" FixedLength="false" Unicode="true" />
-          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="PassportSeries" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="PassportNumber" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="PassportSeries" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="PassportNumber" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="OrganizationId" Type="Int32" />
-          <Property Name="Note" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="PassportScan" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="PassportScanFileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PassportScan" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="PassportScanFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Organization" Relationship="memento_proModel.FK_Visitor_Organization" FromRole="Visitor" ToRole="Organization" />
           <NavigationProperty Name="Request" Relationship="memento_proModel.Request_Visitor" FromRole="Visitor" ToRole="Request" />
         </EntityType>
@@ -447,7 +469,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Request" Relationship="memento_proModel.FK_Request_VisitPurpose" FromRole="VisitPurpose" ToRole="Request" />
         </EntityType>
@@ -464,7 +486,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Request_Employee">
-          <End Type="memento_proModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="memento_proModel.Employee" Role="Employee" Multiplicity="0..1" />
           <End Type="memento_proModel.Request" Role="Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
@@ -488,7 +510,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Request_RequestStatus">
-          <End Type="memento_proModel.RequestStatus" Role="RequestStatus" Multiplicity="1" />
+          <End Type="memento_proModel.RequestStatus" Role="RequestStatus" Multiplicity="0..1" />
           <End Type="memento_proModel.Request" Role="Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RequestStatus">
@@ -500,7 +522,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Request_RequestType">
-          <End Type="memento_proModel.RequestType" Role="RequestType" Multiplicity="1" />
+          <End Type="memento_proModel.RequestType" Role="RequestType" Multiplicity="0..1" />
           <End Type="memento_proModel.Request" Role="Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RequestType">
@@ -512,7 +534,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Request_VisitPurpose">
-          <End Type="memento_proModel.VisitPurpose" Role="VisitPurpose" Multiplicity="1" />
+          <End Type="memento_proModel.VisitPurpose" Role="VisitPurpose" Multiplicity="0..1" />
           <End Type="memento_proModel.Request" Role="Request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="VisitPurpose">
@@ -601,6 +623,17 @@
               <MappingFragment StoreEntitySet="RequestType">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="memento_proModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

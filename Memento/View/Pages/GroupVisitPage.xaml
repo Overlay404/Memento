@@ -29,15 +29,102 @@
                    FontSize="24"
                    Grid.ColumnSpan="3"/>
 
-        <local:PassInformationViewCustom x:Name="PassInformation"
-                                         Grid.Row="1"
-                                         Margin="10 0 20 0"/>
+        <Border Background="#f3f3f3"
+            CornerRadius="10"
+                Grid.Row="1"
+                    Margin="10 0 0 0">
+            <StackPanel>
+                <local:TextBlockCustom TextInTextBlock="Информация для пропуска"
+                                    Margin="0 0 0 10"
+                                    VerticalAlignment="Top"/>
 
-        <local:TheHostViewCustom Grid.Row="1"
+                <TextBlock Text="Срок действия заявки:"
+                       FontSize="13"
+                       Margin="0 0 0 7"
+                       HorizontalAlignment="Center"/>
+
+                <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+
+                    <TextBlock Text="С*"
+                            FontSize="13"
+                            Margin="0 3 5 0"/>
+
+                    <DatePicker Name="WithDatePicker"
+                            IsDropDownOpen="False"
+                            SelectedDateFormat="Short"/>
+
+                    <TextBlock Text="по"
+                            FontSize="14"
+                            Margin="10 3 5 0"/>
+
+                    <DatePicker Name="ByDatePicker"
+                            IsDropDownOpen="False"
+                            SelectedDateFormat="Short"/>
+                </StackPanel>
+
+                <TextBlock Text="*Цель посещения:"
+                        FontSize="13"
+                        Margin="0 5 0 7"
+                        HorizontalAlignment="Center"/>
+
+                <ComboBox HorizontalAlignment="Center"
+                      Width="250"
+                      x:Name="VisitPurposeCB"
+                      ItemsSource="{Binding VisitPurposes}"
+                      Text="asdasd">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+        </Border>
+        <Border Background="#f3f3f3"
+            CornerRadius="10"
+                Grid.Row="1"
                                  Grid.Column="1"
                                  Grid.ColumnSpan="2"
-                                 x:Name="TheHostView"
-                                 Margin="0 0 10 0" Loaded="TheHostViewCustom_Loaded"/>
+                                 Margin="20 0 10 0">
+            <StackPanel>
+                <local:TextBlockCustom TextInTextBlock="Принимающая сторона"
+                                       Margin="0 0 0 10"
+                                       VerticalAlignment="Top"/>
+
+                <TextBlock Text="Подразделение*:"
+                       FontSize="13"
+                       Margin="10 0 0 5"
+                       HorizontalAlignment="Left"/>
+
+                <ComboBox Margin="10 0 10 0"
+                      HorizontalAlignment="Center"
+                      x:Name="DivisionCB"
+                      ItemsSource="{Binding Divisions}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBlock Text="ФИО*:"
+                       FontSize="13"
+                       Margin="10 5 0 5"
+                       HorizontalAlignment="Left"/>
+
+                <ComboBox Margin="10 0 10 0"
+                      HorizontalAlignment="Center"
+                      x:Name="EmployeeCB"
+                      ItemsSource="{Binding Employee}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding LastName}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+        </Border>
 
         <Border Background="#f3f3f3"
                 Grid.Row="2"

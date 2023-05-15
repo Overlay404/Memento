@@ -27,6 +27,8 @@ namespace Memento.View.Controls
             set { SetValue(VisitPurposesProperty, value); }
         }
 
+        public static readonly DependencyProperty VisitPurposesProperty =
+            DependencyProperty.Register("VisitPurposes", typeof(IEnumerable<VisitPurpose>), typeof(PassInformationViewCustom));
         public DateTime DesiredStartDateTime
         {
             get { return (DateTime)GetValue(DesiredStartDateTimeProperty); }
@@ -39,8 +41,6 @@ namespace Memento.View.Controls
             set { SetValue(DesiredExpirationDateTimeProperty, value); }
         }
 
-        public static readonly DependencyProperty VisitPurposesProperty =
-            DependencyProperty.Register("VisitPurposes", typeof(IEnumerable<VisitPurpose>), typeof(PassInformationViewCustom));
 
         public static readonly DependencyProperty DesiredStartDateTimeProperty =
             DependencyProperty.Register("DesiredStartDateTime", typeof(DateTime), typeof(PassInformationViewCustom));

@@ -21,14 +21,14 @@ namespace Memento.Model
         }
     
         public int Id { get; set; }
-        public int RequestTypeId { get; set; }
-        public int RequestStatusId { get; set; }
-        public int DivisionId { get; set; }
-        public System.DateTime DesiredStartDate { get; set; }
-        public System.DateTime DesiredExpirationDate { get; set; }
-        public int VisitPurposeId { get; set; }
+        public Nullable<int> RequestTypeId { get; set; }
+        public Nullable<int> RequestStatusId { get; set; }
+        public Nullable<int> DivisionId { get; set; }
+        public Nullable<System.DateTime> DesiredStartDate { get; set; }
+        public Nullable<System.DateTime> DesiredExpirationDate { get; set; }
+        public Nullable<int> VisitPurposeId { get; set; }
         public Nullable<int> UserId { get; set; }
-        public int EmployeeId { get; set; }
+        public Nullable<int> EmployeeId { get; set; }
     
         public virtual Employee Employee { get; set; }
         public virtual RequestStatus RequestStatus { get; set; }

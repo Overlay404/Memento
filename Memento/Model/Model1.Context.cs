@@ -32,6 +32,7 @@ namespace Memento.Model
         public virtual DbSet<RequestRejectionReason> RequestRejectionReason { get; set; }
         public virtual DbSet<RequestStatus> RequestStatus { get; set; }
         public virtual DbSet<RequestType> RequestType { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Visitor> Visitor { get; set; }
         public virtual DbSet<VisitPurpose> VisitPurpose { get; set; }

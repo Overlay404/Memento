@@ -26,7 +26,7 @@ namespace Memento.Model
         public string Patronymic { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public System.DateTime BirthDate { get; set; }
+        public Nullable<System.DateTime> BirthDate { get; set; }
         public string PassportSeries { get; set; }
         public string PassportNumber { get; set; }
         public string Login { get; set; }
