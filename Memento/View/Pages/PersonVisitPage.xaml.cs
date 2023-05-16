@@ -98,6 +98,9 @@ namespace Memento.View.Pages
             {
                 try
                 {
+                    if (ByDatePicker.SelectedDate == null || WithDatePicker.SelectedDate == null)
+                        throw new Exception("Дата везита не должна быть пустой");
+
                     ValiadteDataPickerBithday();
                     ValiadteDatePickers();
 
@@ -199,26 +202,27 @@ namespace Memento.View.Pages
             Connection.User.FirstName = Name.TextInTextBox.Trim();
             Connection.User.Patronymic = Patronymic.TextInTextBox.Trim();
             Connection.User.BirthDate = DateTime.Today;
-            Connection.User.Email = Mail.TextInTextBox == null ? null : Mail.TextInTextBox.Trim();
-            Connection.User.Phone = Phone.TextInTextBoxForPhone == null ? null : Phone.TextInTextBoxForPhone.Trim();
+            Connection.User.Email = Mail.TextInTextBox?.Trim();
+            Connection.User.Phone = Phone.TextInTextBoxForPhone?.Trim();
             Connection.User.Organization = orgValue;
-            Connection.User.Note = Note.TextInTextBox == null ? null : Note.TextInTextBox.Trim();
-            Connection.User.PassportNumber = Number.TextInTextBox == null ? null : Note.TextInTextBox.Trim();
-            Connection.User.PassportSeries = Series.TextInTextBox == null ? null : Series.TextInTextBox.Trim();
+            Connection.User.Note = Note.TextInTextBox?.Trim();
+            Connection.User.PassportNumber = Note.TextInTextBox?.Trim();
+            Connection.User.PassportSeries = Series.TextInTextBox?.Trim();
         }
 
         #region Проверки полей
 
         private void ValiadteDatePickers()
         {
-            if (ByDatePicker.SelectedDate.Value.Day > WithDatePicker.SelectedDate.Value.Day)
+            if (ByDatePicker.SelectedDate.Value.Day < WithDatePicker.SelectedDate.Value.Day)
                 throw new Exception("Дата окончания заявки не может быть больше чем дата начала заявки");
         }
 
         private void ValiadteDataPickerBithday()
         {
-            if (DateTime.Now.Year - DataPickerBithday.SelectedDate.Value.Year < 16)
-                throw new Exception("Заявку могут додавать только люди достигшие 16 лет");
+            if (DataPickerBithday.SelectedDate != null)
+                if (DateTime.Now.Year - DataPickerBithday.SelectedDate.Value.Year < 16)
+                    throw new Exception("Заявку могут додавать только люди достигшие 16 лет");
         }
 
         private Organization ValidateOrganization()
@@ -266,12 +270,12 @@ namespace Memento.View.Pages
                 LastName = Surname.TextInTextBox.Trim(),
                 FirstName = Name.TextInTextBox.Trim(),
                 Patronymic = Patronymic.TextInTextBox.Trim(),
-                Email = Mail.TextInTextBox == null ? null : Mail.TextInTextBox.Trim(),
-                Phone = Phone.TextInTextBoxForPhone == null ? null : Phone.TextInTextBoxForPhone.Trim(),
+                Email = Mail.TextInTextBox.Trim(),
+                Phone = Phone.TextInTextBoxForPhone?.Trim(),
                 Organization = orgValue,
-                Note = Note.TextInTextBox == null ? null : Note.TextInTextBox.Trim(),
-                PassportNumber = Number.TextInTextBox == null ? null : Number.TextInTextBox.Trim(),
-                PassportSeries = Series.TextInTextBox == null ? null : Series.TextInTextBox.Trim(),
+                Note = Note.TextInTextBox?.Trim(),
+                PassportNumber = Number.TextInTextBox?.Trim(),
+                PassportSeries = Series.TextInTextBox?.Trim(),
                 BirthDate = DateTime.Today
             };
 

@@ -163,6 +163,7 @@
     <Compile Include="View\Pages\AutorizationPage.xaml.cs">
       <DependentUpon>AutorizationPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\Extension\GroupVisitPage.Extension.cs" />
     <Compile Include="View\Pages\Extension\PersonVisitPage.Extension.cs" />
     <Compile Include="View\Pages\GroupVisitPage.xaml.cs">
       <DependentUpon>GroupVisitPage.xaml</DependentUpon>

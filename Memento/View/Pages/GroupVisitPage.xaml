@@ -51,16 +51,20 @@
                             Margin="0 3 5 0"/>
 
                     <DatePicker Name="WithDatePicker"
-                            IsDropDownOpen="False"
-                            SelectedDateFormat="Short"/>
+                                DisplayDateStart="{Binding variableMinDatePickerStart}"
+                                DisplayDateEnd="{Binding variableMaxDatePickerStart}"
+                                IsDropDownOpen="False"
+                                SelectedDateFormat="Short"/>
 
                     <TextBlock Text="по"
                             FontSize="14"
                             Margin="10 3 5 0"/>
 
                     <DatePicker Name="ByDatePicker"
-                            IsDropDownOpen="False"
-                            SelectedDateFormat="Short"/>
+                                DisplayDateStart="{Binding variableMinDatePickerEnd}"
+                                DisplayDateEnd="{Binding variableMaxDatePickerEnd}"
+                                IsDropDownOpen="False"
+                                SelectedDateFormat="Short"/>
                 </StackPanel>
 
                 <TextBlock Text="*Цель посещения:"
@@ -160,14 +164,14 @@
                     </StackPanel>
 
                     <StackPanel Grid.Column="1">
-                        <local:TextBoxCustom x:Name="SurnameInForm"
+                        <local:TextBoxCustom x:Name="Surname"
                                              Margin="0 0 0 7"/>
-                        <local:TextBoxCustom x:Name="NameInForm"
+                        <local:TextBoxCustom x:Name="Name"
                                              Margin="0 0 0 7"/>
-                        <local:TextBoxCustom x:Name="PatronymicnForm"
+                        <local:TextBoxCustom x:Name="Patronymic"
                                              Margin="0 0 0 7"/>
-                        <local:TextBoxCustom x:Name="Phone"
-                                             Margin="0 0 0 7"/>
+                        <local:TextBoxCustomForPhone x:Name="Phone"
+                                                     Margin="0 0 0 7"/>
                         <local:TextBoxCustom x:Name="Mail"
                                              Margin="0 0 0 7"/>
                     </StackPanel>
@@ -185,17 +189,28 @@
 
                     <StackPanel Grid.Column="1"
                                 Margin="0 0 10 0">
-                        <local:TextBoxCustom x:Name="Org"
+                        <ComboBox x:Name="Org"
+                                  ItemsSource="{Binding Organizations}"
+                                  Visibility="Visible"
+                                  DisplayMemberPath="Name"
+                                  Margin="0 0 0 7"/>
+
+
+                        <local:TextBoxCustom x:Name="NewOrg"
+                                             Visibility="Collapsed"
                                              Margin="0 0 0 7"/>
+                        
                         <local:TextBoxCustom x:Name="Note"
                                              Margin="0 0 0 7"/>
 
-                        <DatePicker Margin="0 0 0 7"/>
+                        <DatePicker x:Name="DataPickerBithday"
+                                    Margin="0 0 0 7"/>
 
-                        <local:TextBoxCustom x:Name="Series"
-                                             Margin="0 0 0 7"/>
-                        <local:TextBoxCustom x:Name="Number"
-                                             Margin="0 0 0 7"/>
+                        <local:TextBoxCustomForSeries x:Name="Series"
+                                                      Margin="0 0 0 7"/>
+
+                        <local:TextBoxCustomForNumber x:Name="Number"
+                                                      Margin="0 0 0 7"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="0">
