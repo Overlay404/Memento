@@ -3,23 +3,15 @@ using Memento.View.Controls;
 using Memento.View.Windows;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Memento.View.Pages
 {
@@ -28,51 +20,15 @@ namespace Memento.View.Pages
     /// </summary>
     public partial class PersonVisitPage : Page
     {
-        public string NameFile
-        {
-            get { return (string)GetValue(NameFileProperty); }
-            set { SetValue(NameFileProperty, value); }
-        }
 
-        public static readonly DependencyProperty NameFileProperty =
-            DependencyProperty.Register("NameFile", typeof(string), typeof(PersonVisitPage));
+        private Organization firstOrganization = new Organization() { Name = "Добавить организацию" };
 
-        public ImageSource PhotoPerson
-        {
-            get { return (ImageSource)GetValue(PhotoPersonProperty); }
-            set { SetValue(PhotoPersonProperty, value); }
-        }
-
-        public static readonly DependencyProperty PhotoPersonProperty =
-            DependencyProperty.Register("PhotoPerson", typeof(ImageSource), typeof(PersonVisitPage));
-
-        public IEnumerable<Division> Divisions
-        {
-            get { return (IEnumerable<Division>)GetValue(DivisionsProperty); }
-            set { SetValue(DivisionsProperty, value); }
-        }
-
-        public static readonly DependencyProperty DivisionsProperty =
-            DependencyProperty.Register("Divisions", typeof(IEnumerable<Division>), typeof(PersonVisitPage));
-
-
-        public IEnumerable<VisitPurpose> VisitPurposes
-        {
-            get { return (IEnumerable<VisitPurpose>)GetValue(VisitPurposesProperty); }
-            set { SetValue(VisitPurposesProperty, value); }
-        }
-
-        public static readonly DependencyProperty VisitPurposesProperty =
-            DependencyProperty.Register("VisitPurposes", typeof(IEnumerable<VisitPurpose>), typeof(PersonVisitPage));
-
-        public IEnumerable<Employee> Employee
-        {
-            get { return (IEnumerable<Employee>)GetValue(EmployeeProperty); }
-            set { SetValue(EmployeeProperty, value); }
-        }
-
-        public static readonly DependencyProperty EmployeeProperty =
-            DependencyProperty.Register("Employee", typeof(IEnumerable<Employee>), typeof(PersonVisitPage));
+        #region Свойства для DatePickers
+        public DateTime variableMinDatePickerStart { get; set; }
+        public DateTime variableMinDatePickerEnd { get; set; }
+        public DateTime variableMaxDatePickerStart { get; set; }
+        public DateTime variableMaxDatePickerEnd { get; set; }
+        #endregion
 
         Regex emailRegex = new Regex(@"([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)");
         Regex phoneRegex = new Regex(@"^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$");
@@ -81,9 +37,17 @@ namespace Memento.View.Pages
         {
             PhotoPerson = (ImageSource)new BitmapImage(new Uri(@"..\..\Image\Person.png", UriKind.Relative));
 
-            Divisions = Connection.db.Division.ToList();
-            Employee = Connection.db.Employee.ToList();
-            VisitPurposes = Connection.db.VisitPurpose.ToList();
+            variableMinDatePickerStart = new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 1);
+            variableMinDatePickerEnd = new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 1);
+
+            variableMaxDatePickerStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 15);
+            variableMaxDatePickerEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 15);
+
+            Divisions = Connection.db.Division.Local;
+            Employee = Connection.db.Employee.Local;
+            VisitPurposes = Connection.db.VisitPurpose.Local;
+
+            FillingOrganization();
 
             InitializeComponent();
 
@@ -92,92 +56,218 @@ namespace Memento.View.Pages
                 if (new KeyConverter().ConvertToString(e.Key).All(letter => char.IsLetter(letter)))
                     e.Handled = true;
             };
+
             Number.KeyDown += (sender, e) =>
             {
                 if (new KeyConverter().ConvertToString(e.Key).All(letter => char.IsLetter(letter)))
                     e.Handled = true;
             };
+
             Phone.KeyDown += (sender, e) =>
             {
                 if (new KeyConverter().ConvertToString(e.Key).All(letter => char.IsLetter(letter)))
                     e.Handled = true;
             };
+
             ClearForm.Click += (sender, e) =>
             {
                 MainWindow.Instance.MainFrame.Navigate(new PersonVisitPage());
             };
+
             AttachFile.MouseDown += (sender, e) =>
             {
                 AttachFile.Visibility = Visibility.Collapsed;
                 NameFile = OpenFileDialogSave();
             };
 
-            LoadImageBtn.Click += (sender, e) => { PhotoPerson = ConvertToImageSource(OpenImageDialogSave()); };
+            LoadImageBtn.Click += (sender, e) =>
+            {
+                PhotoPerson = ConvertToImageSource(OpenImageDialogSave());
+            };
+
+            Org.SelectionChanged += (sender, e) =>
+            {
+                if (Org.SelectedValue == firstOrganization)
+                {
+                    Org.Visibility = Visibility.Collapsed;
+                    NewOrg.Visibility = Visibility.Visible;
+                }
+            };
 
             CreateRequestBtn.Click += (sender, e) =>
             {
                 try
                 {
+                    ValiadteDataPickerBithday();
+                    ValiadteDatePickers();
+
                     if (Connection.User == null)
                         NewVisitorIfUserNull();
                     else
                         NewVisitorIfUserNotNull();
-                }
-                catch
-                {
-                    MessageBox.Show("Проверьте все поля на корректность");
-                }
 
-                try
-                {
                     Connection.db.SaveChanges();
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    List<string> mess = new List<string>();
-
-                    foreach (var entityValidationErrors in ex.EntityValidationErrors)
-                    {
-                        foreach (var validationError in entityValidationErrors.ValidationErrors)
-                        {
-                            mess.Add("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
-                        }
-                    }
-
-                    MessageBox.Show(string.Join("\n", mess));
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
 
                 MessageBox.Show($"Заявка на имя {Surname.TextInTextBox} {Name.TextInTextBox} {Patronymic.TextInTextBox} заполнена");
             };
         }
 
+        #region Заполнение нужный полей
+
+        private void FillingOrganization()
+        {
+            Organizations = Connection.db.Organization.Local;
+            Organizations = Organizations.Append(firstOrganization);
+        }
+        #endregion
+
         private void NewVisitorIfUserNull()
         {
-            
+            try
+            {
+                if (Mail.TextInTextBox != null || Phone.TextInTextBoxForPhone != null)
+                    if (Validate(emailRegex, phoneRegex))
+                        throw new Exception("Не введены или не соответсвуют формату данные в поле mail и телефон");
+
+                VisitPurpose visitPurposeName;
+                int divisionId, employeeId;
+
+                CreatingVariables(out visitPurposeName, out divisionId, out employeeId);
+
+                Organization orgValue = ValidateOrganization();
+
+                Visitor visitor = CreationNewVisitor(orgValue);
+
+                Request request = CreationNewRequest(visitPurposeName, divisionId, employeeId);
+
+                visitor.Request.Add(request);
+
+                Connection.db.Request.Add(request);
+
+                Connection.db.Visitor.Add(visitor);
+            }
+            catch
+            {
+                throw new Exception("Проверьте все введенные данные");
+            }
+        }
+
+
+        private void NewVisitorIfUserNotNull()
+        {
+            try
+            {
+                if (Mail.TextInTextBox != null || Phone.TextInTextBoxForPhone != null)
+                    if (Validate(emailRegex, phoneRegex))
+                        throw new Exception("Не введены или не соответсвуют формату данные в поле mail и телефон");
+
+                VisitPurpose visitPurposeName;
+                int divisionId, employeeId;
+
+                CreatingVariables(out visitPurposeName, out divisionId, out employeeId);
+
+                Organization orgValue = ValidateOrganization();
+
+                ValueAssignmentForUser(orgValue);
+
+                Request request = CreationNewRequest(visitPurposeName, divisionId, employeeId);
+
+                Connection.User.Request.Add(request);
+
+                Connection.db.Request.Add(request);
+            }
+            catch
+            {
+                throw new Exception("Проверьте все введенные данные");
+            }
+        }
+
+        private void ValueAssignmentForUser(Organization orgValue)
+        {
+            Connection.User.LastName = Surname.TextInTextBox.Trim();
+            Connection.User.FirstName = Name.TextInTextBox.Trim();
+            Connection.User.Patronymic = Patronymic.TextInTextBox.Trim();
+            Connection.User.BirthDate = DateTime.Today;
+            Connection.User.Email = Mail.TextInTextBox == null ? null : Mail.TextInTextBox.Trim();
+            Connection.User.Phone = Phone.TextInTextBoxForPhone == null ? null : Phone.TextInTextBoxForPhone.Trim();
+            Connection.User.Organization = orgValue;
+            Connection.User.Note = Note.TextInTextBox == null ? null : Note.TextInTextBox.Trim();
+            Connection.User.PassportNumber = Number.TextInTextBox == null ? null : Note.TextInTextBox.Trim();
+            Connection.User.PassportSeries = Series.TextInTextBox == null ? null : Series.TextInTextBox.Trim();
+        }
+
+        #region Проверки полей
+
+        private void ValiadteDatePickers()
+        {
+            if (ByDatePicker.SelectedDate.Value.Day > WithDatePicker.SelectedDate.Value.Day)
+                throw new Exception("Дата окончания заявки не может быть больше чем дата начала заявки");
+        }
+
+        private void ValiadteDataPickerBithday()
+        {
+            if (DateTime.Now.Year - DataPickerBithday.SelectedDate.Value.Year < 16)
+                throw new Exception("Заявку могут додавать только люди достигшие 16 лет");
+        }
+
+        private Organization ValidateOrganization()
+        {
+            if (NewOrg.TextInTextBox != null)
+            {
+                Organization newOrganization = NewOrg.TextInTextBox == null
+                                                ? throw new Exception("Поле орагнизация заполнено не корректно")
+                                                : new Organization() { Name = NewOrg.TextInTextBox.Trim() };
+
+                Connection.db.Organization.Local.Add(newOrganization);
+
+                return newOrganization;
+            }
+            else
+                return Org.SelectedItem as Organization ?? throw new Exception("Проверьте введенные данные");
+        }
+
+        private bool Validate(Regex emailRegex, Regex phoneRegex)
+        {
+            if (Mail.TextInTextBox != null || Phone.TextInTextBoxForPhone != null)
+                if (phoneRegex.IsMatch(Phone.TextInTextBoxForPhone) || emailRegex.IsMatch(Mail.TextInTextBox))
+                    return false;
+
+            return true;
+        }
+        #endregion
+
+        #region Методы создания
+
+        private void CreatingVariables(out VisitPurpose visitPurposeName, out int divisionId, out int employeeId)
+        {
             VisitPurpose cbVisit = VisitPurposeCB.SelectedItem as VisitPurpose;
             Division cbDivision = DivisionCB.SelectedItem as Division;
             Employee cbEmpl = EmployeeCB.SelectedItem as Employee;
 
-            if (Validate(emailRegex, phoneRegex))
-            {
-                MessageBox.Show("Не введены или не соответсвуют формату данные");
-            }
+            visitPurposeName = Connection.db.VisitPurpose.FirstOrDefault(v => v.Name == (cbVisit).Name);
+            divisionId = Connection.db.Division.FirstOrDefault(d => d.Name == (cbDivision).Name).Id;
+            employeeId = Connection.db.Employee.FirstOrDefault(em => em.LastName == (cbEmpl).LastName).Id;
+        }
 
-            VisitPurpose visitPurposeName = Connection.db.VisitPurpose.FirstOrDefault(v => v.Name == (cbVisit).Name);
-            int divisionId = Connection.db.Division.FirstOrDefault(d => d.Name == (cbDivision).Name).Id;
-            int employeeId = Connection.db.Employee.FirstOrDefault(em => em.LastName == (cbEmpl).LastName).Id;
-
-            Organization orgValue = Org.TextInTextBox == null ||
-                Connection.db.Organization.Local.FirstOrDefault(x => x.Name == Org.TextInTextBox.Trim()) == null 
-                ? null : new Organization() { Name = Org.TextInTextBox.Trim() };
-
-            Visitor visitor = new Visitor
+        private Visitor CreationNewVisitor(Organization orgValue) =>
+            new Visitor
             {
                 LastName = Surname.TextInTextBox.Trim(),
                 FirstName = Name.TextInTextBox.Trim(),
                 Patronymic = Patronymic.TextInTextBox.Trim(),
                 Email = Mail.TextInTextBox == null ? null : Mail.TextInTextBox.Trim(),
-                Phone = Phone.TextInTextBox == null ? null : Phone.TextInTextBox.Trim(),
+                Phone = Phone.TextInTextBoxForPhone == null ? null : Phone.TextInTextBoxForPhone.Trim(),
                 Organization = orgValue,
                 Note = Note.TextInTextBox == null ? null : Note.TextInTextBox.Trim(),
                 PassportNumber = Number.TextInTextBox == null ? null : Number.TextInTextBox.Trim(),
@@ -185,7 +275,8 @@ namespace Memento.View.Pages
                 BirthDate = DateTime.Today
             };
 
-            Request request = new Request
+        private Request CreationNewRequest(VisitPurpose visitPurposeName, int divisionId, int employeeId) =>
+            new Request
             {
                 RequestTypeId = 1,
                 RequestStatusId = 1,
@@ -195,79 +286,9 @@ namespace Memento.View.Pages
                 DivisionId = divisionId,
                 EmployeeId = employeeId
             };
+        #endregion
 
-            visitor.Request.Add(request);
-
-            Connection.db.Request.Add(request);
-
-            Connection.db.Visitor.Add(visitor);
-
-            if (Validate(emailRegex, phoneRegex))
-            {
-                MessageBox.Show("Не введены или не соответсвуют формату данные");
-            }
-        }
-
-        private void NewVisitorIfUserNotNull()
-        {
-
-            VisitPurpose cbVisit = VisitPurposeCB.SelectedItem as VisitPurpose;
-            Division cbDivision = DivisionCB.SelectedItem as Division;
-            Employee cbEmpl = EmployeeCB.SelectedItem as Employee;
-
-           
-
-            VisitPurpose visitPurposeName = Connection.db.VisitPurpose.FirstOrDefault(v => v.Name == (cbVisit).Name);
-            int divisionId = Connection.db.Division.FirstOrDefault(d => d.Name == (cbDivision).Name).Id;
-            int employeeId = Connection.db.Employee.FirstOrDefault(em => em.LastName == (cbEmpl).LastName).Id;
-
-            Organization orgValue = Org.TextInTextBox == null ||
-                Connection.db.Organization.Local.FirstOrDefault(x => x.Name == Org.TextInTextBox.Trim()) == null
-                ? null : new Organization() { Name = Org.TextInTextBox.Trim() };
-
-
-            Connection.User.LastName = Surname.TextInTextBox.Trim();
-            Connection.User.FirstName = Name.TextInTextBox.Trim();
-            Connection.User.Patronymic = Patronymic.TextInTextBox.Trim();
-            Connection.User.BirthDate = DateTime.Today;
-            Connection.User.Email = Mail.TextInTextBox == null ? null : Mail.TextInTextBox.Trim();
-            Connection.User.Phone = Phone.TextInTextBox == null ? null : Phone.TextInTextBox.Trim();
-            Connection.User.Organization = orgValue;
-            Connection.User.Note = Note.TextInTextBox == null ? null : Note.TextInTextBox.Trim();
-            Connection.User.PassportNumber = Number.TextInTextBox == null ? null : Note.TextInTextBox.Trim();
-            Connection.User.PassportSeries = Series.TextInTextBox == null ? null : Series.TextInTextBox.Trim();
-
-
-            Request request = new Request
-            {
-                RequestTypeId = 1,
-                RequestStatusId = 1,
-                DesiredStartDate = WithDatePicker.SelectedDate ?? DateTime.Today,
-                DesiredExpirationDate = ByDatePicker.SelectedDate ?? DateTime.Today,
-                VisitPurpose = visitPurposeName,
-                DivisionId = divisionId,
-                EmployeeId = employeeId
-            };
-
-            Connection.User.Request.Add(request);
-
-            Connection.db.Request.Add(request);
-
-            if (Validate(emailRegex, phoneRegex))
-            {
-                MessageBox.Show("Не введены или не соответсвуют формату данные");
-            }
-        }
-
-        private bool Validate(Regex emailRegex, Regex phoneRegex)
-        {
-            if (Mail.TextInTextBox != null || Phone.TextInTextBox != null)
-            {
-                if (phoneRegex.IsMatch(Phone.TextInTextBox) || emailRegex.IsMatch(Mail.TextInTextBox)) return false;
-            }
-            return true;
-        }
-
+        #region Работа с файлами и Фото
         public static byte[] OpenImageDialogSave()
         {
             OpenFileDialog openFile = new OpenFileDialog()
@@ -285,13 +306,18 @@ namespace Memento.View.Pages
 
         public static ImageSource ConvertToImageSource(byte[] bytes)
         {
-            if (bytes == null) return null;
+            if (bytes == null)
+                return null;
 
             BitmapImage biImg = new BitmapImage();
             MemoryStream ms = new MemoryStream(bytes);
+
             biImg.BeginInit();
+
             biImg.StreamSource = ms;
+
             biImg.EndInit();
+
             ImageSource image = biImg as ImageSource;
             return image;
         }
@@ -304,15 +330,13 @@ namespace Memento.View.Pages
             };
 
             if (openFile.ShowDialog().GetValueOrDefault())
-            {
                 return openFile.FileName;
-            }
+
             return null;
         }
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
+        #endregion
 
+        private void Button_Click_2(object sender, RoutedEventArgs e) =>
             MainWindow.Instance.MainFrame.Navigate(new SelectionPage());
-        }
     }
 }

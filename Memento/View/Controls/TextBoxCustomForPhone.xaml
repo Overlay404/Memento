@@ -1,8 +1,9 @@
-﻿<UserControl x:Class="Memento.View.Controls.TextBoxCustom"
+﻿<UserControl x:Class="Memento.View.Controls.TextBoxCustomForPhone"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" x:Name="MyUserControl"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -44,10 +45,12 @@
         </ControlTemplate>
     </UserControl.Resources>
     <Grid>
-        <TextBox Text="{Binding TextInTextBox,
-                        ElementName=MyUserControl}"
-                 Template="{StaticResource TextBoxBaseControlTemplate}"
-                 MinWidth="50" 
-                 FontSize="14"/>
+
+        <toolkit:MaskedTextBox Text="{Binding TextInTextBoxForPhone,
+                               ElementName=MyUserControl}"
+                               Mask="+7 (000) 000 00-00"
+                               Template="{StaticResource TextBoxBaseControlTemplate}"
+                               MinWidth="50" 
+                               FontSize="14"/>
     </Grid>
 </UserControl>

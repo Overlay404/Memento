@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Memento.View.Windows"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Icon="C:\Users\232002\source\repos\Mement\Memento\Image\company_logotype.png"
+        Icon="\Image\company_logotype.png"
         Title="Хранитель" Height="500" Width="800">
     <Frame NavigationUIVisibility="Hidden" x:Name="MainFrame"/>
 </Window>
